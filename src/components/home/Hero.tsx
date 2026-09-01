@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Button from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
 import { useIntro } from "@/providers/IntroProgressProvider";
 
 /** Navbar logo text size in px — the hero wordmark morphs down to exactly this. */
@@ -66,23 +65,13 @@ export default function Hero() {
     target: statementRef,
     offset: ["start 0.95", "start 0.5"],
   });
-  const statementOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.5],
-    [active ? 0 : 1, 1]
-  );
-  const statementY = useTransform(scrollYProgress, [0, 0.5], [active ? 44 : 0, 0]);
+  const statementOpacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
 
   return (
     <section
       id="hero"
       aria-label="GrowthYard — brand intro"
-      className={cn(
-        "relative",
-        active
-          ? "min-h-[200svh]"
-          : "flex min-h-svh flex-col justify-center overflow-hidden pb-32 pt-32 lg:pb-40"
-      )}
+      className="relative min-h-[200svh]"
     >
       <div className="grid-bg absolute inset-0 opacity-20" aria-hidden="true" />
       <div
@@ -90,17 +79,10 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* Brand title sequence — fixed while the morph runs, in-flow when reduced */}
-      <motion.div
-        className={cn(
-          "overflow-hidden",
-          active && "pointer-events-none fixed inset-x-0 top-0 z-[5]"
-        )}
-        initial={active ? { opacity: 0, y: 34 } : false}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <div style={active ? { marginTop: "42vh" } : undefined}>
+      {/* Brand title sequence — fixed while the morph runs; values are
+          static under reduced motion but the structure stays identical. */}
+      <div className="overflow-hidden pointer-events-none fixed inset-x-0 top-0 z-[5]">
+        <div style={{ marginTop: "42vh" }}>
           <div className="mx-auto w-full max-w-[1440px] px-6 sm:px-8 lg:px-12">
             <motion.h1
               ref={wordmarkRef}
@@ -121,22 +103,19 @@ export default function Hero() {
 
             <motion.p
               style={{ opacity: taglineOpacity, y: taglineY }}
-              className={cn(
-                "label-uppercase flex items-center gap-3 text-paper/55",
-                active ? "mt-8" : "mt-6"
-              )}
+              className="label-uppercase mt-8 flex items-center gap-3 text-paper/55"
             >
               <span className="h-px w-10 bg-accent" aria-hidden="true" />
               Independent Creative &amp; Growth Agency
             </motion.p>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Statement — fills the second half of the opening sequence */}
-      <motion.div ref={statementRef} className={active ? "pt-[104svh]" : ""}>
+      <motion.div ref={statementRef} className="pt-[104svh]">
         <motion.div
-          style={{ opacity: statementOpacity, y: statementY }}
+          style={{ opacity: statementOpacity }}
           className="mx-auto w-full max-w-[1440px] px-6 sm:px-8 lg:px-12"
         >
           <h2
@@ -171,12 +150,7 @@ export default function Hero() {
       <motion.div style={{ opacity: cueOpacity }}>
         <div
           data-scrollcue
-          className={cn(
-            "flex flex-col items-center gap-3",
-            active
-              ? "pointer-events-none fixed bottom-8 left-1/2 z-[4] -translate-x-1/2"
-              : "mt-20"
-          )}
+          className="pointer-events-none fixed bottom-8 left-1/2 z-[4] flex -translate-x-1/2 flex-col items-center gap-3"
         >
           <span className="block h-14 w-px overflow-hidden bg-paper/15">
             <span className="block h-full w-px animate-pulse bg-gradient-to-b from-accent to-transparent" />

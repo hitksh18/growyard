@@ -6,12 +6,10 @@ import {
   AnimatePresence,
   motion,
   useMotionValue,
-  useMotionValueEvent,
   useTransform,
   type MotionValue,
 } from "framer-motion";
 import { navigation } from "@/data/navigation";
-import { cn } from "@/lib/utils";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { useIntro } from "@/providers/IntroProgressProvider";
 import MobileMenu from "./MobileMenu";
@@ -57,9 +55,9 @@ export default function Navbar() {
   const { scrolled } = useScrollProgress();
   const { setNavSlot } = useIntro();
   const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(() => !!active);
 
   const logoRef = useRef<HTMLAnchorElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   // Measure the exact navbar logo slot (viewport px) so the hero wordmark
   // can morph into this position. Re-measured after fonts settle + resize.
@@ -89,9 +87,21 @@ export default function Navbar() {
     };
   }, [open]);
 
-  useMotionValueEvent(progress, "change", (v) => {
-    setHidden(active && !open && v < 0.06);
-  });
+  // Reveal gate applied straight to the DOM after hydration so SSR/client
+  // markup stays identical (no React-managed attrs that vary by motion state).
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const apply = () => {
+      const hidden = active && !open && progress.get() < 0.06;
+      el.style.pointerEvents = hidden ? "none" : "";
+      if (hidden) el.setAttribute("inert", "");
+      else el.removeAttribute("inert");
+    };
+    apply();
+    const off = progress.on("change", apply);
+    return () => off();
+  }, [progress, active, open]);
 
   // Surface (bg + blur + hairline) reveal
   const one = useMotionValue(1);
@@ -124,11 +134,8 @@ export default function Navbar() {
   return (
     <>
       <header
-        inert={hidden || undefined}
-        className={cn(
-          "fixed inset-x-0 top-0 z-50",
-          hidden ? "pointer-events-none" : "pointer-events-auto"
-        )}
+        ref={headerRef}
+        className="fixed inset-x-0 top-0 z-50"
       >
         {/* Surface layer — fades in with the morph */}
         <motion.div
@@ -138,9 +145,8 @@ export default function Navbar() {
         />
 
         <motion.div
-          initial={!active ? { y: -24, opacity: 0 } : false}
+          initial={false}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="relative mx-auto flex h-16 w-full max-w-[1440px] items-center justify-between px-6 sm:px-8 lg:h-20 lg:px-12"
         >
           <motion.span
