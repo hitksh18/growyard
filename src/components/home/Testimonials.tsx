@@ -10,8 +10,8 @@ const real = testimonials.filter(
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="scroll-mt-24 py-24 lg:py-32">
-      <Container className="grid-bg">
+    <section id="testimonials" className="scroll-mt-24 border-t border-paper/10 py-24 lg:py-32">
+      <Container>
         {real.length > 0 ? (
           <>
             <SectionHeading label="Kind words" number="07">
@@ -54,7 +54,14 @@ export default function Testimonials() {
             </div>
           </>
         ) : (
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+          <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-12">
+            <span
+              className="serif-em pointer-events-none absolute right-0 top-0 select-none leading-none text-paper/[0.04]"
+              style={{ fontSize: "clamp(12rem, 24vw, 20rem)" }}
+              aria-hidden="true"
+            >
+              “
+            </span>
             <div className="lg:col-span-4">
               <Reveal>
                 <SectionLabel number="07">Kind words</SectionLabel>

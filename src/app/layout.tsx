@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { IntroProgressProvider } from "@/providers/IntroProgressProvider";
 import { siteConfig } from "@/data/site";
 
 const geistSans = Geist({
@@ -65,9 +66,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${serif.variable} h-full scroll-smooth antialiased`}
     >
       <body className="flex min-h-full flex-col bg-ink text-paper">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <IntroProgressProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </IntroProgressProvider>
       </body>
     </html>
   );

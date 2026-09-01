@@ -7,7 +7,7 @@ import { processSteps } from "@/data/process";
 
 export default function ProcessPreview() {
   return (
-    <section id="process" className="scroll-mt-24 py-24 lg:py-32">
+    <section id="process" className="scroll-mt-24 py-20 lg:py-28">
       <Container>
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <SectionHeading label="How we work" number="05">

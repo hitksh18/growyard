@@ -40,11 +40,18 @@ export default function AboutHero() {
         <motion.h1
           variants={reduce ? undefined : item}
           className="max-w-4xl text-balance font-medium tracking-tight text-paper"
-          style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", lineHeight: 1.04 }}
+          style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", lineHeight: 1.03 }}
         >
           Not another agency.{" "}
-          <em className="font-serif italic">Your growth partner.</em>
+          <span className="serif-em">Your growth partner.</span>
         </motion.h1>
+        <motion.p
+          variants={reduce ? undefined : item}
+          className="mt-8 max-w-xl text-base leading-relaxed text-paper/55 sm:text-lg"
+        >
+          Independent, senior and hands-on — strategy, creative and marketing
+          under one roof, aimed at growth you can actually measure.
+        </motion.p>
       </motion.div>
     </section>
   );

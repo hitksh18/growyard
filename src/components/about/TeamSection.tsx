@@ -9,8 +9,8 @@ interface TeamSectionProps {
 
 export default function TeamSection({ number = "06" }: TeamSectionProps) {
   return (
-    <section id="team" className="scroll-mt-24 py-24 lg:py-32">
-      <Container className="grid-bg relative">
+    <section id="team" className="scroll-mt-24 border-t border-paper/10 py-24 lg:py-32">
+      <Container>
         <SectionHeading label={team.label} number={number}>
           {team.heading}
         </SectionHeading>

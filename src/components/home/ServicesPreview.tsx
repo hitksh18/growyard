@@ -37,10 +37,16 @@ export default function ServicesPreview() {
               const Icon = service.icon;
               return (
                 <Reveal key={service.slug} distance={16} delay={i * 0.03}>
-                  <li className="border-t border-paper/10 last:border-b">
+                  <li className="group relative border-t border-paper/10 transition-colors duration-500 last:border-b hover:bg-paper/[0.025]">
+                    {/* Left accent rail */}
+                    <span
+                      className="absolute inset-y-0 left-0 w-px scale-y-0 bg-accent transition-transform duration-500 ease-out group-hover:scale-y-100"
+                      aria-hidden="true"
+                    />
+
                     <Link
                       href={`/services#${service.slug}`}
-                      className="group grid grid-cols-12 items-center gap-4 py-7 sm:py-8"
+                      className="grid grid-cols-12 items-center gap-4 py-7 pl-4 sm:py-8"
                     >
                       <span
                         className="col-span-2 text-[0.65rem] font-medium tracking-[0.2em] text-paper/35 transition-colors duration-300 group-hover:text-accent sm:col-span-1"
@@ -51,11 +57,11 @@ export default function ServicesPreview() {
 
                       <span className="col-span-10 flex items-center gap-4 sm:col-span-6">
                         <Icon
-                          className="h-5 w-5 shrink-0 text-paper/30 transition-colors duration-300 group-hover:text-accent"
+                          className="h-5 w-5 shrink-0 text-paper/30 transition-all duration-300 group-hover:-rotate-6 group-hover:text-accent"
                           strokeWidth={1.5}
                           aria-hidden="true"
                         />
-                        <span className="text-xl font-medium tracking-tight text-paper transition-all duration-300 group-hover:translate-x-1 sm:text-3xl">
+                        <span className="text-xl font-medium tracking-tight text-paper transition-all duration-300 group-hover:translate-x-2 group-hover:text-accent sm:text-3xl">
                           {service.title}
                         </span>
                       </span>
@@ -67,10 +73,12 @@ export default function ServicesPreview() {
                       </span>
 
                       <span
-                        className="hidden text-paper/40 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent sm:block"
+                        className="hidden items-center justify-center text-paper/40 transition-all duration-300 group-hover:translate-x-1.5 group-hover:text-accent sm:flex"
                         aria-hidden="true"
                       >
-                        →
+                        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-paper/15 transition-colors duration-300 group-hover:border-accent/50 group-hover:bg-accent/10">
+                          →
+                        </span>
                       </span>
                     </Link>
                   </li>
