@@ -78,7 +78,7 @@ export default function AboutPreview() {
           {/* Wordmark + manifesto */}
           <div className="flex flex-col lg:col-span-7">
             <Reveal>
-              <SectionLabel number="03">About</SectionLabel>
+              <SectionLabel number="01">About</SectionLabel>
             </Reveal>
 
             <Reveal delay={0.06}>

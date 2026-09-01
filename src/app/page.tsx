@@ -1,26 +1,30 @@
 import Hero from "@/components/home/Hero";
-import SelectedWork from "@/components/home/SelectedWork";
-import ServicesPreview from "@/components/home/ServicesPreview";
 import AboutPreview from "@/components/home/AboutPreview";
-import Results from "@/components/home/Results";
+import ServicesPreview from "@/components/home/ServicesPreview";
+import SelectedWork from "@/components/home/SelectedWork";
 import ProcessPreview from "@/components/home/ProcessPreview";
 import TeamSection from "@/components/about/TeamSection";
-import Testimonials from "@/components/home/Testimonials";
 import FAQPreview from "@/components/home/FAQPreview";
 import FinalCTA from "@/components/home/FinalCTA";
 
 export default function Home() {
   return (
     <>
+      {/* 01 Brand intro + 02 What GrowthYard Is (navbar activates after) */}
       <Hero />
-      <SelectedWork />
-      <ServicesPreview />
+      {/* 03 About */}
       <AboutPreview />
-      <Results />
+      {/* 04 Services */}
+      <ServicesPreview />
+      {/* 05 Selected Work */}
+      <SelectedWork />
+      {/* 06 Process */}
       <ProcessPreview />
+      {/* 07 Team */}
       <TeamSection />
-      <Testimonials />
+      {/* 08 FAQ */}
       <FAQPreview />
+      {/* 09 Final CTA */}
       <FinalCTA />
     </>
   );

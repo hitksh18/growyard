@@ -21,7 +21,7 @@ export default function FinalCTA() {
           <div className="flex flex-col justify-between lg:col-span-6">
             <div>
               <Reveal>
-                <SectionLabel number="09">Let&apos;s get to work</SectionLabel>
+                <SectionLabel number="07">Let&apos;s get to work</SectionLabel>
                 <h2
                   className="mt-8 text-balance font-medium tracking-tight text-paper"
                   style={{ fontSize: "clamp(2.4rem, 5.2vw, 4.7rem)", lineHeight: 1.03 }}

@@ -1,11 +1,12 @@
 import type { NavItem } from "@/types/content";
 
 export const navigation: NavItem[] = [
-  { label: "Work", href: "/work" },
-  { label: "Services", href: "/services" },
-  { label: "About", href: "/about" },
-  { label: "Process", href: "/process" },
-  { label: "Contact", href: "/contact" },
+  { label: "About", href: "/about", section: "about" },
+  { label: "Services", href: "/services", section: "services" },
+  { label: "Work", href: "/work", section: "work" },
+  { label: "Process", href: "/process", section: "process" },
+  { label: "Team", href: "/about#team", section: "team" },
+  { label: "FAQ", href: "/#faq", section: "faq" },
 ];
 
 export const footerNavigation: {

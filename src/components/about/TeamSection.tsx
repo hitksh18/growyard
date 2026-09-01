@@ -7,7 +7,7 @@ interface TeamSectionProps {
   number?: string;
 }
 
-export default function TeamSection({ number = "06" }: TeamSectionProps) {
+export default function TeamSection({ number = "05" }: TeamSectionProps) {
   return (
     <section id="team" className="scroll-mt-24 border-t border-paper/10 py-24 lg:py-32">
       <Container>

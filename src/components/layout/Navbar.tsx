@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -10,6 +10,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { navigation } from "@/data/navigation";
+import { cn } from "@/lib/utils";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { useIntro } from "@/providers/IntroProgressProvider";
 import MobileMenu from "./MobileMenu";
@@ -18,13 +19,23 @@ interface NavItemProps {
   index: number;
   href: string;
   label: string;
+  section?: string;
   progress: MotionValue<number>;
   active: boolean;
+  activeSection: string | null;
 }
 
-function NavItem({ index, href, label, progress, active }: NavItemProps) {
-  const lo = 0.14 + index * 0.045;
-  const hi = Math.min(lo + 0.085, 0.6);
+function NavItem({
+  index,
+  href,
+  label,
+  section,
+  progress,
+  active,
+  activeSection,
+}: NavItemProps) {
+  const lo = 0.8 + index * 0.028;
+  const hi = Math.min(lo + 0.07, 0.99);
   const revealed = useTransform(progress, [lo, hi], [0, 1]);
   const travel = useTransform(progress, [lo, hi], [-5, 0]);
   const one = useMotionValue(1);
@@ -34,51 +45,49 @@ function NavItem({ index, href, label, progress, active }: NavItemProps) {
   );
   const y = useTransform([travel, one], (latest) => (active ? latest[0] : 0));
 
+  const isCurrent = activeSection === section;
+
   return (
     <motion.span style={{ opacity, y }} className="inline-flex">
       <Link
         href={href}
-        className="group relative flex items-baseline gap-2 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-paper/60 transition-colors duration-300 hover:text-paper"
+        aria-current={isCurrent ? "true" : undefined}
+        className={cn(
+          "group relative flex items-baseline gap-2 text-[0.66rem] font-medium uppercase tracking-[0.18em] transition-colors duration-300",
+          isCurrent ? "text-paper" : "text-paper/60 hover:text-paper"
+        )}
       >
-        <span className="text-[0.55rem] text-accent/70" aria-hidden="true">
+        <span
+          className={cn(
+            "text-[0.55rem] transition-colors duration-300",
+            isCurrent ? "text-accent" : "text-accent/70"
+          )}
+          aria-hidden="true"
+        >
           {String(index + 1).padStart(2, "0")}
         </span>
         {label}
-        <span className="absolute -bottom-2 left-0 h-px w-0 bg-accent transition-all duration-500 group-hover:w-full" />
+        <span
+          className={cn(
+            "absolute -bottom-2 left-0 h-px bg-accent transition-all duration-500",
+            isCurrent ? "w-full" : "w-0 group-hover:w-full"
+          )}
+          aria-hidden="true"
+        />
       </Link>
     </motion.span>
   );
 }
 
 export default function Navbar() {
-  const { progress, active } = useIntro();
+  const { progress, active, isHome } = useIntro();
   const { scrolled } = useScrollProgress();
-  const { setNavSlot } = useIntro();
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
 
-  const logoRef = useRef<HTMLAnchorElement>(null);
   const headerRef = useRef<HTMLElement>(null);
-
-  // Measure the exact navbar logo slot (viewport px) so the hero wordmark
-  // can morph into this position. Re-measured after fonts settle + resize.
-  useLayoutEffect(() => {
-    const read = () => {
-      const el = logoRef.current;
-      if (el) {
-        const r = el.getBoundingClientRect();
-        setNavSlot({ left: r.left, top: r.top });
-      }
-    };
-    read();
-    const t = window.setTimeout(read, 350);
-    const r = window.setTimeout(read, 1200);
-    window.addEventListener("resize", read);
-    return () => {
-      window.clearTimeout(t);
-      window.clearTimeout(r);
-      window.removeEventListener("resize", read);
-    };
-  }, [setNavSlot]);
+  // One-way latch: once the intro reveals the navbar it stays for good.
+  const revealedRef = useRef(false);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -93,7 +102,8 @@ export default function Navbar() {
     const el = headerRef.current;
     if (!el) return;
     const apply = () => {
-      const hidden = active && !open && progress.get() < 0.06;
+      if (active && progress.get() >= 0.85) revealedRef.current = true;
+      const hidden = active && !open && !revealedRef.current;
       el.style.pointerEvents = hidden ? "none" : "";
       if (hidden) el.setAttribute("inert", "");
       else el.removeAttribute("inert");
@@ -103,27 +113,53 @@ export default function Navbar() {
     return () => off();
   }, [progress, active, open]);
 
-  // Surface (bg + blur + hairline) reveal
+  // Scroll-spy over home sections → subtle accent on the active nav item.
+  useEffect(() => {
+    if (!isHome) return;
+    const targets: HTMLElement[] = [];
+    for (const item of navigation) {
+      if (item.section) {
+        const el = document.getElementById(item.section);
+        if (el) targets.push(el);
+      }
+    }
+    if (!targets.length) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection((entry.target as HTMLElement).id);
+          }
+        }
+      },
+      { rootMargin: "-30% 0px -55% 0px", threshold: 0 }
+    );
+    targets.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [isHome]);
+
+  // Surface (bg + hairline) reveal
   const one = useMotionValue(1);
   const scrolledMv = useMotionValue(0);
   useEffect(() => {
     scrolledMv.set(scrolled ? 1 : 0);
   }, [scrolled, scrolledMv]);
 
-  const surfaceHome = useTransform(progress, [0.04, 0.2], [0, 1]);
+  const surfaceHome = useTransform(progress, [0.78, 0.95], [0, 1]);
   const surface = useTransform([surfaceHome, scrolledMv], (latest) =>
-    active ? latest[0] : latest[1]
+    active ? latest[0] : isHome ? 1 : latest[1]
   );
 
-  // Logo crossfades in where the hero wordmark lands
-  const logoReveal = useTransform(progress, [0.6, 0.86], [0, 1]);
+  // Logo crossfades in once the intro has settled
+  const logoReveal = useTransform(progress, [0.9, 1], [0, 1]);
   const logoOpacity = useTransform([logoReveal, one], (latest) =>
     active ? latest[0] : 1
   );
 
   // CTA + hamburger
-  const ctaReveal = useTransform(progress, [0.18, 0.34], [0, 1]);
-  const ctaTravel = useTransform(progress, [0.18, 0.34], [-4, 0]);
+  const ctaReveal = useTransform(progress, [0.78, 0.9], [0, 1]);
+  const ctaTravel = useTransform(progress, [0.78, 0.9], [-4, 0]);
   const ctaOpacity = useTransform([ctaReveal, one], (latest) =>
     active ? latest[0] : 1
   );
@@ -133,13 +169,10 @@ export default function Navbar() {
 
   return (
     <>
-      <header
-        ref={headerRef}
-        className="fixed inset-x-0 top-0 z-50"
-      >
-        {/* Surface layer — fades in with the morph */}
+      <header ref={headerRef} className="fixed inset-x-0 top-0 z-50">
+        {/* Surface layer — fades in with the intro */}
         <motion.div
-          className="absolute inset-0 border-b border-line bg-ink/80 backdrop-blur-xl"
+          className="absolute inset-0 border-b border-line bg-ink/85 backdrop-blur-md"
           style={{ opacity: surface }}
           aria-hidden="true"
         />
@@ -147,14 +180,10 @@ export default function Navbar() {
         <motion.div
           initial={false}
           animate={{ y: 0, opacity: 1 }}
-          className="relative mx-auto flex h-16 w-full max-w-[1440px] items-center justify-between px-6 sm:px-8 lg:h-20 lg:px-12"
+          className="relative mx-auto flex h-16 w-full max-w-[1440px] items-center justify-between px-6 sm:px-8 lg:px-12"
         >
-          <motion.span
-            style={{ opacity: logoOpacity }}
-            className="inline-flex"
-          >
+          <motion.span style={{ opacity: logoOpacity }} className="inline-flex">
             <Link
-              ref={logoRef}
               href="/"
               aria-label="GrowthYard home"
               className="group flex items-center gap-2 text-paper"
@@ -171,7 +200,7 @@ export default function Navbar() {
           </motion.span>
 
           <nav
-            className="hidden items-center gap-8 lg:flex"
+            className="hidden items-center gap-6 lg:flex xl:gap-8"
             aria-label="Primary"
           >
             {navigation.map((item, i) => (
@@ -180,8 +209,10 @@ export default function Navbar() {
                 index={i}
                 href={item.href}
                 label={item.label}
+                section={item.section}
                 progress={progress}
                 active={active}
+                activeSection={activeSection}
               />
             ))}
           </nav>
@@ -193,7 +224,7 @@ export default function Navbar() {
             >
               <Link
                 href="/contact"
-                className="group flex items-center gap-2 rounded-full border border-paper/20 px-6 py-2.5 text-[0.65rem] font-medium uppercase tracking-[0.16em] text-paper transition-colors duration-300 hover:border-accent hover:bg-accent"
+                className="group flex items-center gap-2 border border-paper/25 px-5 py-2 text-[0.65rem] font-medium uppercase tracking-[0.16em] text-paper transition-colors duration-300 hover:border-accent hover:bg-accent/10 hover:text-accent"
               >
                 Start a project
                 <span

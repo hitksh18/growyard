@@ -2,10 +2,8 @@
 
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
-  useState,
   type ReactNode,
 } from "react";
 import {
@@ -16,11 +14,6 @@ import {
 } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-export interface NavSlot {
-  left: number;
-  top: number;
-}
-
 interface IntroContextValue {
   /** True when on the homepage. */
   isHome: boolean;
@@ -29,15 +22,12 @@ interface IntroContextValue {
   /** prefers-reduced-motion. */
   reduced: boolean;
   /**
-   * Smoothed intro progress 0..1 across the first viewport of scrolling.
+   * Smoothed intro progress 0..1 across the first TWO viewports of scrolling.
    * 0 = brand title sequence (wordmark large, navbar hidden).
-   * 1 = wordmark settled in navbar (navbar fully revealed).
+   * ~0.5 = "What GrowthYard Is" positioning is reached.
+   * 1 = intro complete — navbar fully revealed and sticky.
    */
   progress: MotionValue<number>;
-  /** Measured navbar logo slot (viewport px, top-left of the brand mark). */
-  navSlot: NavSlot | null;
-  /** Registered by the navbar so the hero can morph into the exact slot. */
-  setNavSlot: (slot: NavSlot | null) => void;
 }
 
 const IntroContext = createContext<IntroContextValue | null>(null);
@@ -66,8 +56,6 @@ export function IntroProgressProvider({
     damping: 30,
     mass: 0.95,
   });
-  const [navSlot, setNavSlot] = useState<NavSlot | null>(null);
-  const setSlot = useCallback((slot: NavSlot | null) => setNavSlot(slot), []);
 
   useEffect(() => {
     if (!active) {
@@ -79,7 +67,8 @@ export function IntroProgressProvider({
     const update = () => {
       raf = 0;
       const vh = window.innerHeight || 1;
-      const clamped = Math.max(0, Math.min(1, window.scrollY / vh));
+      // The intro spans two viewports (brand intro + positioning).
+      const clamped = Math.max(0, Math.min(1, window.scrollY / (2 * vh)));
       raw.set(clamped);
     };
     const onScroll = () => {
@@ -101,9 +90,7 @@ export function IntroProgressProvider({
   }, [active, raw]);
 
   return (
-    <IntroContext.Provider
-      value={{ isHome, active, reduced, progress, navSlot, setNavSlot: setSlot }}
-    >
+    <IntroContext.Provider value={{ isHome, active, reduced, progress }}>
       {children}
     </IntroContext.Provider>
   );

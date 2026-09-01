@@ -89,11 +89,22 @@ body {
 .grid-bg {
   background-image: linear-gradient(
       to right,
-      rgba(250, 250, 249, 0.035) 1px,
+      rgba(250, 250, 249, 0.05) 1px,
       transparent 1px
     ),
-    linear-gradient(to bottom, rgba(250, 250, 249, 0.035) 1px, transparent 1px);
+    linear-gradient(to bottom, rgba(250, 250, 249, 0.05) 1px, transparent 1px);
   background-size: 72px 72px;
+}
+
+/* Subtle charcoal tonal variation + faint blue atmospheric depth.
+   Stays within the near-black identity — no colorful gradients. */
+.bg-tonal {
+  background: radial-gradient(
+      110% 80% at 50% -10%,
+      rgba(47, 107, 255, 0.08) 0%,
+      transparent 55%
+    ),
+    linear-gradient(180deg, #0b0b0e 0%, #070709 42%, #050505 100%);
 }
 
 /* Subtle radial glow used behind key content */

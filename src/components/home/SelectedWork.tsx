@@ -14,7 +14,7 @@ export default function SelectedWork() {
     <section id="work" className="scroll-mt-24 py-24 lg:py-36">
       <Container>
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <SectionHeading label="Selected work" number="01">
+          <SectionHeading label="Selected work" number="03">
             Work that speaks for itself.
           </SectionHeading>
           <Reveal delay={0.1}>

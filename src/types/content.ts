@@ -40,4 +40,6 @@ export interface Metric {
 export interface NavItem {
   label: string;
   href: string;
+  /** Home section this item refers to (for scroll-spy). */
+  section?: string;
 }

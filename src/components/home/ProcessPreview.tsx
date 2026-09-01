@@ -10,7 +10,7 @@ export default function ProcessPreview() {
     <section id="process" className="scroll-mt-24 py-20 lg:py-28">
       <Container>
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <SectionHeading label="How we work" number="05">
+          <SectionHeading label="How we work" number="04">
             From first idea to real growth.
           </SectionHeading>
           <Reveal delay={0.1}>

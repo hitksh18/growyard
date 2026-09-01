@@ -15,7 +15,7 @@ export default function FAQPreview() {
   return (
     <section id="faq" className="scroll-mt-24 py-24 lg:py-32">
       <Container>
-        <SectionHeading label="FAQ" number="08">
+        <SectionHeading label="FAQ" number="06">
           Questions answered.
         </SectionHeading>
 

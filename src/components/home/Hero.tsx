@@ -1,69 +1,25 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Button from "@/components/ui/Button";
 import { useIntro } from "@/providers/IntroProgressProvider";
 
-/** Navbar logo text size in px — the hero wordmark morphs down to exactly this. */
-const NAV_LOGO_FONT_PX = 12.8;
-
 export default function Hero() {
-  const { progress, active, navSlot } = useIntro();
+  const { progress } = useIntro();
 
-  const wordmarkRef = useRef<HTMLHeadingElement>(null);
   const statementRef = useRef<HTMLDivElement>(null);
 
-  // Morph metrics: current wordmark font size + viewport height.
-  const [metrics, setMetrics] = useState({ fontPx: 0, vh: 0 });
+  // Brand intro handles itself in-flow; these fades just ease it out
+  // gracefully as the visitor scrolls through "What GrowthYard Is".
+  const wordmarkOpacity = useTransform(progress, [0.5, 0.8], [1, 0]);
+  const taglineOpacity = useTransform(progress, [0.46, 0.72], [1, 0]);
+  const wordmarkScale = useTransform(progress, [0, 1], [1, 0.97]);
 
-  useEffect(() => {
-    const measure = () => {
-      const el = wordmarkRef.current;
-      const fontPx = el ? parseFloat(getComputedStyle(el).fontSize) || 0 : 0;
-      setMetrics({ fontPx, vh: window.innerHeight || 1 });
-    };
-    measure();
-    const t1 = window.setTimeout(measure, 350);
-    const t2 = window.setTimeout(measure, 1200);
-    window.addEventListener("resize", measure);
-    return () => {
-      window.clearTimeout(t1);
-      window.clearTimeout(t2);
-      window.removeEventListener("resize", measure);
-    };
-  }, []);
-
-  // Start anchor: wordmark centred at 42vh. Shrink toward the measured navbar slot.
-  const targetY =
-    active && metrics.vh > 0
-      ? (navSlot?.top ??
-          (typeof window !== "undefined"
-            ? window.innerWidth >= 1024
-              ? 34
-              : 26
-            : 26)) -
-        0.42 * metrics.vh
-      : 0;
-
-  const scaleTarget =
-    active && metrics.fontPx > 0
-      ? Math.max(0.02, NAV_LOGO_FONT_PX / metrics.fontPx)
-      : 1;
-
-  // Signature scroll morph: GROWTHYARD settles into the navbar.
-  const wordmarkY = useTransform(progress, [0, 1], [0, targetY]);
-  const wordmarkScale = useTransform(progress, [0, 1], [1, scaleTarget]);
-  const wordmarkOpacity = useTransform(progress, [0.78, 0.92], [1, active ? 0 : 1]);
-
-  const taglineOpacity = useTransform(progress, [0.02, 0.16], [1, active ? 0 : 1]);
-  const taglineY = useTransform(progress, [0.02, 0.16], [0, active ? -10 : 0]);
-  const cueOpacity = useTransform(progress, [0, 0.14], [1, active ? 0 : 1]);
-
-  // Statement reveal — appears once the brand has settled into the nav.
+  // Statement reveal — appears once the brand has settled in.
   const { scrollYProgress } = useScroll({
     target: statementRef,
-    offset: ["start 0.95", "start 0.5"],
+    offset: ["start 0.95", "start 0.45"],
   });
   const statementOpacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
 
@@ -71,49 +27,48 @@ export default function Hero() {
     <section
       id="hero"
       aria-label="GrowthYard — brand intro"
-      className="relative min-h-[200svh]"
+      className="relative"
     >
-      <div className="grid-bg absolute inset-0 opacity-20" aria-hidden="true" />
+      {/* Background: subtle charcoal tonal variation + faint blue atmosphere */}
+      <div className="bg-tonal absolute inset-0" aria-hidden="true" />
       <div
-        className="glow-behind absolute left-1/2 top-0 h-[70%] w-[70%] -translate-x-1/2 opacity-30"
+        className="grid-bg absolute inset-0 opacity-30"
+        aria-hidden="true"
+      />
+      <div
+        className="glow-behind absolute left-1/2 top-0 h-[70%] w-[70%] -translate-x-1/2 opacity-40"
         aria-hidden="true"
       />
 
-      {/* Brand title sequence — fixed while the morph runs; values are
-          static under reduced motion but the structure stays identical. */}
-      <div className="overflow-hidden pointer-events-none fixed inset-x-0 top-0 z-[5]">
-        <div style={{ marginTop: "42vh" }}>
-          <div className="mx-auto w-full max-w-[1440px] px-6 sm:px-8 lg:px-12">
-            <motion.h1
-              ref={wordmarkRef}
-              style={{
-                scale: wordmarkScale,
-                y: wordmarkY,
-                opacity: wordmarkOpacity,
-                transformOrigin: "top left",
-              }}
-              className="flex w-max items-center gap-[0.45em] font-semibold uppercase leading-none tracking-[0.08em] text-paper will-change-transform text-[clamp(2.4rem,10vw,4.4rem)] lg:text-[clamp(5rem,8.6vw,9rem)]"
-            >
-              GrowthYard
-              <span
-                className="h-[0.5em] w-[0.5em] rounded-full bg-accent"
-                aria-hidden="true"
-              />
-            </motion.h1>
+      {/* 01 — BRAND INTRO */}
+      <div className="relative flex min-h-svh flex-col items-center justify-center">
+        <div className="mx-auto w-full max-w-[1440px] px-6 text-center sm:px-8 lg:px-12">
+          <motion.h1
+            style={{ scale: wordmarkScale, opacity: wordmarkOpacity }}
+            className="mx-auto inline-flex w-max max-w-full items-center justify-center gap-[0.45em] font-semibold uppercase leading-none tracking-[0.08em] text-paper will-change-transform text-[clamp(2.4rem,10vw,4.4rem)] lg:text-[clamp(5rem,8.6vw,9rem)]"
+          >
+            GrowthYard
+            <span
+              className="h-[0.5em] w-[0.5em] rounded-full bg-accent"
+              aria-hidden="true"
+            />
+          </motion.h1>
 
-            <motion.p
-              style={{ opacity: taglineOpacity, y: taglineY }}
-              className="label-uppercase mt-8 flex items-center gap-3 text-paper/55"
-            >
-              <span className="h-px w-10 bg-accent" aria-hidden="true" />
+          <motion.div
+            style={{ opacity: taglineOpacity }}
+            className="mt-10 flex justify-center"
+          >
+            <p className="label-uppercase flex items-center gap-4 text-paper/55">
+              <span className="h-px w-12 bg-accent" aria-hidden="true" />
               Independent Creative &amp; Growth Agency
-            </motion.p>
-          </div>
+              <span className="h-px w-12 bg-accent" aria-hidden="true" />
+            </p>
+          </motion.div>
         </div>
       </div>
 
-      {/* Statement — fills the second half of the opening sequence */}
-      <motion.div ref={statementRef} className="pt-[104svh]">
+      {/* 02 — WHAT GROWTHYARD IS */}
+      <div ref={statementRef} className="flex min-h-svh items-center">
         <motion.div
           style={{ opacity: statementOpacity }}
           className="mx-auto w-full max-w-[1440px] px-6 sm:px-8 lg:px-12"
@@ -139,27 +94,12 @@ export default function Hero() {
             <Button href="/contact" size="lg">
               Start a project
             </Button>
-            <Button href="/work" variant="ghost" size="lg" iconDirection="up">
+            <Button href="/work" variant="ghost" size="lg">
               See our work
             </Button>
           </div>
         </motion.div>
-      </motion.div>
-
-      {/* Scroll cue */}
-      <motion.div style={{ opacity: cueOpacity }}>
-        <div
-          data-scrollcue
-          className="pointer-events-none fixed bottom-8 left-1/2 z-[4] flex -translate-x-1/2 flex-col items-center gap-3"
-        >
-          <span className="block h-14 w-px overflow-hidden bg-paper/15">
-            <span className="block h-full w-px animate-pulse bg-gradient-to-b from-accent to-transparent" />
-          </span>
-          <span className="text-[0.6rem] uppercase tracking-[0.22em] text-paper/35">
-            Scroll to explore
-          </span>
-        </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
