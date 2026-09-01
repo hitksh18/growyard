@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GrowthYard
 
-## Getting Started
+**Growth Focused. Results Driven.**
 
-First, run the development server:
+GrowthYard is a creative marketing & growth agency website built with Next.js (App Router), TypeScript, Tailwind CSS v4, Framer Motion, Lucide React and Next/Image.
+
+## Stack
+
+- **Next.js 16** — App Router, React 19
+- **TypeScript**
+- **Tailwind CSS v4** (CSS-first configuration)
+- **Framer Motion** — hero reveal, scroll reveal, timeline, FAQ, mobile menu, counters
+- **Lucide React** — icons
+- **Next/Image** — image optimisation
+
+## Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script           | Purpose                         |
+| ---------------- | ------------------------------- |
+| `npm run dev`    | Start the dev server            |
+| `npm run build`  | Production build                |
+| `npm run start`  | Serve the production build      |
+| `npm run lint`   | Run ESLint                      |
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/                 # Routes, layout, globals.css, metadata
+│   ├── work/            # /work
+│   ├── services/        # /services
+│   ├── about/           # /about
+│   ├── process/         # /process
+│   ├── contact/         # /contact
+│   └── insights/        # /insights
+├── components/
+│   ├── layout/          # Navbar, Footer, MobileMenu
+│   ├── ui/              # Button, Container, SectionHeading, etc.
+│   ├── home/            # Homepage sections
+│   ├── work/            # ProjectCard, ProjectGrid, CaseStudyHeader
+│   ├── services/        # ServiceItem, ServicesList
+│   ├── about/           # AboutHero, TeamSection, TeamCard
+│   ├── process/         # ProcessTimeline, ProcessStep
+│   ├── contact/         # ContactForm, ContactInfo
+│   └── animations/      # FadeIn, Reveal, Stagger, Parallax
+├── data/                # All content (site, projects, services, team, …)
+├── lib/                 # utils, constants
+├── hooks/               # useScrollProgress, useMediaQuery, useInView
+├── types/               # Shared TypeScript types
+└── styles/              # animations.css
+public/
+├── images/{projects,team,testimonials,general}
+├── icons/
+└── logos/
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Editing content
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+All site content is centralised in `src/data/`:
 
-## Deploy on Vercel
+| File                | What you edit                              |
+| ------------------- | ------------------------------------------ |
+| `site.ts`           | Brand name, tagline, URLs, socials         |
+| `navigation.ts`     | Nav links                                  |
+| `services.ts`       | The 8 services                             |
+| `projects.ts`       | Case studies                               |
+| `team.ts`           | Real team members                          |
+| `testimonials.ts`   | Client quotes (currently a placeholder)    |
+| `faq.ts`            | FAQ items                                  |
+| `insights.ts`       | Insight posts                              |
+| `results.ts`        | Results metrics                            |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> Placeholder metrics use `--` and placeholder testimonials are clearly marked. Replace them with real, verifiable data — never ship fabricated statistics.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Adding a project
+
+1. Add an entry to `src/data/projects.ts` (slug, title, category, image path, metrics).
+2. Drop an image into `public/images/projects/`.
+3. It automatically appears on `/work` and the homepage selected-work grid.
+
+## Design system
+
+- **Primary:** `#050505` (near-black)
+- **Secondary:** off-white (`#fafaf9`)
+- **Accent:** electric blue (`#2f6bff`) — used sparingly
+- Blue is an accent, never the dominant colour.
+- Editorial serif italics (`Instrument Serif`) for occasional emphasis.
+- Animations respect `prefers-reduced-motion`.
+
+## Notes
+
+- The intro section of the work page shows a "Project 01 — placeholder" style card until real case studies are added.
+- Contact form composes a `mailto:` draft. To wire a real backend, update `src/components/contact/ContactForm.tsx`.

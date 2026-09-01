@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" fill="none">
+  <rect width="1600" height="1200" fill="#0B0B0B"/>
+  <circle cx="300" cy="950" r="380" fill="#2F6BFF" opacity="0.15"/>
+  <rect x="0" y="0" width="1600" height="1200" fill="url(#vg)"/>
+  <rect x="440" y="160" width="720" height="780" fill="none" stroke="#FAFAF9" stroke-opacity="0.22" stroke-width="2"/>
+  <rect x="452" y="172" width="696" height="756" fill="none" stroke="#FAFAF9" stroke-opacity="0.08" stroke-width="1"/>
+  <text x="560" y="430" font-family="Georgia, serif" font-style="italic" font-size="120" fill="#FAFAF9" fill-opacity="0.9">Cavemans</text>
+  <text x="470" y="560" font-family="sans-serif" font-weight="700" font-size="150" letter-spacing="2" fill="#FAFAF9">PIZZERIA</text>
+  <path d="M520 620 H1080" stroke="#2F6BFF" stroke-width="5"/>
+  <text x="560" y="700" font-family="sans-serif" font-weight="500" font-size="24" letter-spacing="8" fill="#FAFAF9" fill-opacity="0.55">IDENTITY · MENUS · CAMPAIGNS</text>
+  <text x="560" y="760" font-family="sans-serif" font-weight="500" font-size="24" letter-spacing="8" fill="#FAFAF9" fill-opacity="0.4">EST. 2025</text>
+  <text x="90" y="1120" font-family="sans-serif" font-weight="500" font-size="24" letter-spacing="6" fill="#FAFAF9" fill-opacity="0.5">02 — CREATIVE &amp; DESIGN</text>
+  <defs>
+    <linearGradient id="vg" x1="0" y1="0" x2="1600" y2="1200">
+      <stop offset="0" stop-color="#111111" stop-opacity="0"/>
+      <stop offset="1" stop-color="#050505" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+</svg>

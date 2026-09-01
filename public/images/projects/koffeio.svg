@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" fill="none">
+  <rect width="1600" height="1200" fill="#0C0C0C"/>
+  <circle cx="1180" cy="320" r="300" fill="#2F6BFF" opacity="0.14"/>
+  <rect x="0" y="0" width="1600" height="1200" fill="url(#vg)"/>
+  <path d="M760 900 C760 760 440 780 440 900" stroke="#FAFAF9" stroke-opacity="0.22" stroke-width="2" fill="none"/>
+  <path d="M1160 900 C1160 760 840 780 840 900" stroke="#FAFAF9" stroke-opacity="0.15" stroke-width="2" fill="none"/>
+  <circle cx="800" cy="820" r="250" fill="none" stroke="#FAFAF9" stroke-opacity="0.12" stroke-width="3"/>
+  <text x="90" y="120" font-family="sans-serif" font-weight="600" font-size="26" letter-spacing="8" fill="#FAFAF9" fill-opacity="0.55">KOFFEIO</text>
+  <text x="90" y="330" font-family="Georgia, serif" font-style="italic" font-size="150" fill="#FAFAF9" fill-opacity="0.92">Slow.</text>
+  <text x="90" y="470" font-family="sans-serif" font-weight="600" font-size="170" letter-spacing="-4" fill="#FAFAF9">BREWED.</text>
+  <text x="96" y="560" font-family="sans-serif" font-weight="500" font-size="22" letter-spacing="6" fill="#2F6BFF">WEB / UX / IDENTITY / 2025</text>
+  <circle cx="1440" cy="1010" r="40" fill="none" stroke="#2F6BFF" stroke-width="3"/>
+  <text x="90" y="1090" font-family="sans-serif" font-weight="500" font-size="24" fill="#FAFAF9" fill-opacity="0.5">03</text>
+  <defs>
+    <linearGradient id="vg" x1="0" y1="0" x2="1600" y2="1200">
+      <stop offset="0" stop-color="#111111" stop-opacity="0"/>
+      <stop offset="1" stop-color="#050505" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+</svg>

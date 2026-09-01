@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" fill="none">
+  <rect width="1600" height="1200" fill="#0A0A0A"/>
+  <circle cx="1320" cy="240" r="340" fill="#2F6BFF" opacity="0.16"/>
+  <rect x="0" y="0" width="1600" height="1200" fill="url(#vg)"/>
+  <circle cx="820" cy="600" r="380" fill="none" stroke="#FAFAF9" stroke-opacity="0.10" stroke-width="1"/>
+  <circle cx="820" cy="600" r="200" fill="none" stroke="#FAFAF9" stroke-opacity="0.08" stroke-width="1"/>
+  <line x1="0" y1="150" x2="1600" y2="150" stroke="#FAFAF9" stroke-opacity="0.12" stroke-width="1"/>
+  <text x="90" y="120" font-family="sans-serif" font-weight="600" font-size="26" letter-spacing="8" fill="#FAFAF9" fill-opacity="0.55">WRAP LICKS</text>
+  <text x="90" y="330" font-family="Georgia, serif" font-style="italic" font-size="150" fill="#FAFAF9" fill-opacity="0.92">Bold.</text>
+  <text x="90" y="470" font-family="sans-serif" font-weight="700" font-size="170" letter-spacing="-4" fill="#FAFAF9">FLAVOR.</text>
+  <text x="96" y="560" font-family="sans-serif" font-weight="500" font-size="22" letter-spacing="6" fill="#2F6BFF">BRAND / SOCIAL / GROWTH / 2025</text>
+  <path d="M150 1030 L440 1030" stroke="#2F6BFF" stroke-width="6"/>
+  <text x="90" y="1090" font-family="sans-serif" font-weight="500" font-size="24" fill="#FAFAF9" fill-opacity="0.5">01</text>
+  <defs>
+    <linearGradient id="vg" x1="0" y1="0" x2="1600" y2="1200">
+      <stop offset="0" stop-color="#111111" stop-opacity="0"/>
+      <stop offset="1" stop-color="#050505" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+</svg>
