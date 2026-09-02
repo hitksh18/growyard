@@ -48,3 +48,5 @@ dev-error.log
 
 # claude
 .claude/
+
+auto-push.log
