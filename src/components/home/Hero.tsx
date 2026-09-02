@@ -12,41 +12,39 @@ const principles = [
 export default function Hero() {
   const { progress, reduced } = useIntro();
 
-  // Brand group: CENTER (50% vh) → UPPER-CENTER (~20% vh) → HOLD
-  // Translate is scroll-driven, clamped HOLD after 0.44
-  // -180px ≈ 20-25% from top on 900px (50%→30%→22%), holds after
-  const brandY = useTransform(progress, [0, 0.40, 0.44, 1], [0, -154, -180, -180]);
-  const brandScale = useTransform(progress, [0, 0.44, 1], [1, 0.92, 0.92]);
-  const brandOpacity = useTransform(progress, [0.84, 0.97], [1, 0]);
+  // SCROLL PHASES per spec: 0-35% move, 35-55% hold, 55-75% first line, 75-90% second, 90-100% complete
+  // Brand: CENTER (50% vh) → UPPER-CENTER (~20% vh) → HOLD
+  const brandY = useTransform(progress, [0, 0.35, 0.55, 1], [0, -180, -180, -180]);
+  const brandScale = useTransform(progress, [0, 0.35, 1], [1, 0.92, 0.92]);
+  const brandOpacity = useTransform(progress, [0.90, 0.99], [1, 0]);
 
   // Background — keep visible, extremely subtle
   const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.85, 0.55, 0.30]);
   const gridOpacity = useTransform(progress, [0, 0.6], [0.48, 0.28]);
 
-  // Manifesto: ONLY AFTER brand has settled → short hold → reveal
-  // First ~50% (0-0.44) brand moves, next 15% hold (0.44-0.58), then message
-  const manifestoOpacity = useTransform(progress, [0.56, 0.70], [0, 1]);
-  const manifestoY = useTransform(progress, [0.56, 0.70], [30, 0]);
-  const manifestoBlurVal = useTransform(progress, [0.56, 0.70], [8, 0]);
+  // Manifesto: ONLY AFTER brand locked (55-75% first, 75-90% second)
+  const manifestoOpacity = useTransform(progress, [0.55, 0.75], [0, 1]);
+  const manifestoY = useTransform(progress, [0.55, 0.75], [30, 0]);
+  const manifestoBlurVal = useTransform(progress, [0.55, 0.75], [8, 0]);
   const manifestoFilter = useTransform(manifestoBlurVal, (v) => `blur(${v}px)`);
 
-  const emphasisOpacity = useTransform(progress, [0.64, 0.78], [0, 1]);
-  const emphasisY = useTransform(progress, [0.64, 0.78], [30, 0]);
-  const emphasisBlurVal = useTransform(progress, [0.64, 0.78], [8, 0]);
+  const emphasisOpacity = useTransform(progress, [0.75, 0.90], [0, 1]);
+  const emphasisY = useTransform(progress, [0.75, 0.90], [30, 0]);
+  const emphasisBlurVal = useTransform(progress, [0.75, 0.90], [8, 0]);
   const emphasisFilter = useTransform(emphasisBlurVal, (v) => `blur(${v}px)`);
 
-  // Principles after manifesto
-  const principlesOpacity = useTransform(progress, [0.74, 0.86], [0, 1]);
-  const principlesY = useTransform(progress, [0.74, 0.86], [16, 0]);
-  const lineScale = useTransform(progress, [0.76, 0.88], [0, 1]);
-  const closingOpacity = useTransform(progress, [0.80, 0.92], [0, 1]);
+  // Principles after manifesto — sequential within 75-90%
+  const principlesOpacity = useTransform(progress, [0.78, 0.90], [0, 1]);
+  const principlesY = useTransform(progress, [0.78, 0.90], [16, 0]);
+  const lineScale = useTransform(progress, [0.80, 0.90], [0, 1]);
+  const closingOpacity = useTransform(progress, [0.84, 0.94], [0, 1]);
 
-  const p0Opacity = useTransform(progress, [0.74, 0.84], [0, 1]);
-  const p0Y = useTransform(progress, [0.74, 0.84], [10, 0]);
-  const p1Opacity = useTransform(progress, [0.78, 0.88], [0, 1]);
-  const p1Y = useTransform(progress, [0.78, 0.88], [10, 0]);
-  const p2Opacity = useTransform(progress, [0.82, 0.92], [0, 1]);
-  const p2Y = useTransform(progress, [0.82, 0.92], [10, 0]);
+  const p0Opacity = useTransform(progress, [0.78, 0.86], [0, 1]);
+  const p0Y = useTransform(progress, [0.78, 0.86], [10, 0]);
+  const p1Opacity = useTransform(progress, [0.82, 0.90], [0, 1]);
+  const p1Y = useTransform(progress, [0.82, 0.90], [10, 0]);
+  const p2Opacity = useTransform(progress, [0.85, 0.93], [0, 1]);
+  const p2Y = useTransform(progress, [0.85, 0.93], [10, 0]);
 
   if (reduced) {
     return (

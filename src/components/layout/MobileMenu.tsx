@@ -72,10 +72,22 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
               variants={reduce ? undefined : itemVariants}
               className="overflow-hidden"
             >
-              <Link
+              <a
                 href={item.href}
-                onClick={onClose}
-                className="group flex items-baseline justify-between border-b border-paper/10 py-4 sm:py-5"
+                onClick={(e) => {
+                  if (item.section) {
+                    e.preventDefault();
+                    const el = document.getElementById(item.section);
+                    if (el) {
+                      const headerOffset = 72;
+                      const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+                      window.scrollTo({ top, behavior: "smooth" });
+                      if (window.location.hash) history.replaceState(null, "", window.location.pathname);
+                    }
+                  }
+                  onClose();
+                }}
+                className="group flex cursor-pointer items-baseline justify-between border-b border-paper/10 py-4 sm:py-5"
               >
                 <span className="flex items-baseline gap-3">
                   <span
@@ -94,7 +106,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
                 >
                   →
                 </span>
-              </Link>
+              </a>
             </motion.li>
           ))}
         </motion.ul>

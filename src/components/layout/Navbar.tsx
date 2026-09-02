@@ -25,6 +25,20 @@ interface NavItemProps {
   activeSection: string | null;
 }
 
+function scrollToSection(section?: string) {
+  if (!section) return;
+  const el = document.getElementById(section);
+  if (!el) return;
+  // Account for sticky navbar (h-16 = 64px) + small breathing
+  const headerOffset = 72;
+  const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+  window.scrollTo({ top, behavior: "smooth" });
+  // Keep URL at "/" — never create /#about
+  if (window.location.hash) {
+    history.replaceState(null, "", window.location.pathname);
+  }
+}
+
 function NavItem({
   index,
   href,
@@ -47,13 +61,22 @@ function NavItem({
 
   const isCurrent = activeSection === section;
 
+  // Homepage scroll — programmatic, URL stays "/"
+  const handleClick = (e: React.MouseEvent) => {
+    if (section) {
+      e.preventDefault();
+      scrollToSection(section);
+    }
+  };
+
   return (
     <motion.span style={{ opacity, y }} className="inline-flex">
-      <Link
+      <a
         href={href}
         aria-current={isCurrent ? "true" : undefined}
+        onClick={handleClick}
         className={cn(
-          "group relative flex items-baseline gap-2 text-[0.66rem] font-medium uppercase tracking-[0.18em] transition-colors duration-300",
+          "group relative flex cursor-pointer items-baseline gap-2 text-[0.66rem] font-medium uppercase tracking-[0.18em] transition-colors duration-300",
           isCurrent ? "text-paper" : "text-paper/60 hover:text-paper"
         )}
       >
@@ -74,7 +97,7 @@ function NavItem({
           )}
           aria-hidden="true"
         />
-      </Link>
+      </a>
     </motion.span>
   );
 }

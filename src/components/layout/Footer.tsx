@@ -1,7 +1,27 @@
+"use client";
+
 import Link from "next/link";
 import { footerNavigation } from "@/data/navigation";
 import { BRAND } from "@/lib/constants";
 import Container from "@/components/ui/Container";
+
+function handleHashScroll(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+  if (href.startsWith("/#") || href.startsWith("#")) {
+    e.preventDefault();
+    const id = href.includes("#") ? href.split("#")[1] : "";
+    if (id === "top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (id) {
+      const el = document.getElementById(id);
+      if (el) {
+        const headerOffset = 72;
+        const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }
+    if (window.location.hash) history.replaceState(null, "", window.location.pathname);
+  }
+}
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -53,6 +73,7 @@ export default function Footer() {
                     <li key={link.label}>
                       <Link
                         href={link.href}
+                        onClick={(e) => handleHashScroll(e, link.href)}
                         className="group inline-flex items-baseline gap-2.5 text-sm text-paper/70 transition-colors duration-300 hover:text-accent"
                       >
                         <span
@@ -86,6 +107,7 @@ export default function Footer() {
           </p>
           <Link
             href="#top"
+            onClick={(e) => handleHashScroll(e, "#top")}
             aria-label="Back to top"
             className="group inline-flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-paper/30 transition-colors duration-300 hover:text-paper"
           >
