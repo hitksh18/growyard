@@ -67,8 +67,9 @@ export function IntroProgressProvider({
     const update = () => {
       raf = 0;
       const vh = window.innerHeight || 1;
-      // The intro spans two viewports (brand intro + positioning).
-      const clamped = Math.max(0, Math.min(1, window.scrollY / (2 * vh)));
+      // Hero scroll container is 260svh (≈2.6 viewports) — deterministic staged
+      // 0-35% move, 35-55% hold, 55-90% tagline, 90-100% exit
+      const clamped = Math.max(0, Math.min(1, window.scrollY / (2.6 * vh)));
       raw.set(clamped);
     };
     const onScroll = () => {
