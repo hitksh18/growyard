@@ -34,45 +34,48 @@ export default function AboutPreview() {
   const small = projects[0];
 
   return (
-    <section id="about" className="scroll-mt-24 py-24 lg:py-36">
+    <section id="about" className="scroll-mt-24 pt-12 pb-8 sm:pt-16 sm:pb-10 lg:pt-20 lg:pb-12">
       <Container>
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-10">
-          {/* Editorial image composition */}
-          <div className="relative lg:col-span-5">
-            <Parallax offset={40}>
-              <Reveal distance={36}>
-                <div className="relative border border-paper/10">
-                  <div className="relative aspect-[4/5] overflow-hidden">
-                    <Image
-                      src={tall.image}
-                      alt={tall.alt}
-                      fill
-                      sizes="(min-width: 1024px) 38vw, 100vw"
-                      className="object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.05]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
-                    <span className="absolute bottom-6 left-6 text-[0.6rem] uppercase tracking-[0.22em] text-paper/70">
-                      The yard — {tall.client}
-                    </span>
+        <div className="grid grid-cols-1 gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-10 lg:items-start">
+          {/* Editorial image composition — controlled, compact */}
+          <div className="relative lg:col-span-5 lg:self-start">
+            <div className="relative pb-6 sm:pb-8 lg:pb-0">
+              <Parallax offset={24}>
+                <Reveal distance={24}>
+                  <div className="relative border border-paper/10">
+                    <div className="relative aspect-[4/5] overflow-hidden">
+                      <Image
+                        src={tall.image}
+                        alt={tall.alt}
+                        fill
+                        sizes="(min-width: 1024px) 38vw, 100vw"
+                        className="object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.05]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
+                      <span className="absolute bottom-6 left-6 text-[0.6rem] uppercase tracking-[0.22em] text-paper/70">
+                        The yard — {tall.client}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Reveal>
-            </Parallax>
-
-            {/* Overlapping second art */}
-            <Reveal delay={0.15} className="relative z-10 -mt-16 ml-auto w-[62%] lg:-mt-20 lg:mr-8">
-              <div className="border border-paper/10 bg-ink p-2">
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <Image
-                    src={small.image}
-                    alt={small.alt}
-                    fill
-                    sizes="(min-width: 1024px) 24vw, 55vw"
-                    className="object-cover"
-                  />
-                </div>
+                </Reveal>
+              </Parallax>
+              {/* Overlapping second art — absolute, does not inflate section height */}
+              <div className="absolute bottom-2 right-2 z-10 w-[58%] sm:bottom-3 sm:right-3 sm:w-[54%] lg:bottom-4 lg:right-4 lg:w-[60%]">
+                <Reveal delay={0.15} distance={16}>
+                  <div className="border border-paper/10 bg-ink p-1.5 sm:p-2">
+                    <div className="relative aspect-[3/4] overflow-hidden">
+                      <Image
+                        src={small.image}
+                        alt={small.alt}
+                        fill
+                        sizes="(min-width: 1024px) 24vw, 55vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                </Reveal>
               </div>
-            </Reveal>
+            </div>
           </div>
 
           {/* Wordmark + manifesto */}

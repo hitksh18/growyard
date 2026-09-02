@@ -8,7 +8,7 @@ import { services } from "@/data/services";
 
 export default function ServicesPreview() {
   return (
-    <section id="services" className="scroll-mt-24 py-24 lg:py-32">
+    <section id="services" className="scroll-mt-24 pt-10 pb-16 sm:pt-12 sm:pb-16 lg:pt-12 lg:pb-20">
       <Container>
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <SectionHeading label="What we do" number="02">
