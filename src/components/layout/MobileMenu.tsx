@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { navigation } from "@/data/navigation";
 import { BRAND } from "@/lib/constants";
 
 interface MobileMenuProps {
   onClose: () => void;
+  isHome: boolean;
 }
 
 const listVariants: Variants = {
@@ -23,8 +25,9 @@ const itemVariants: Variants = {
   },
 };
 
-export default function MobileMenu({ onClose }: MobileMenuProps) {
+export default function MobileMenu({ onClose, isHome }: MobileMenuProps) {
   const reduce = useReducedMotion();
+  const router = useRouter();
 
   return (
     <motion.div
@@ -75,8 +78,9 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
               <a
                 href={item.href}
                 onClick={(e) => {
-                  if (item.section) {
-                    e.preventDefault();
+                  if (!item.section) return;
+                  e.preventDefault();
+                  if (isHome) {
                     const el = document.getElementById(item.section);
                     if (el) {
                       const headerOffset = 72;
@@ -84,6 +88,8 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
                       window.scrollTo({ top, behavior: "smooth" });
                       if (window.location.hash) history.replaceState(null, "", window.location.pathname);
                     }
+                  } else {
+                    router.push(`/${item.section}`);
                   }
                   onClose();
                 }}

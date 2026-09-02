@@ -1,194 +1,373 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import Button from "@/components/ui/Button";
-import SectionHeading from "@/components/ui/SectionHeading";
+import { motion, useReducedMotion } from "framer-motion";
 import Container from "@/components/ui/Container";
-import Reveal from "@/components/animations/Reveal";
+import SectionLabel from "@/components/ui/SectionLabel";
 import { featuredProjects } from "@/data/projects";
+import { ANIMATION } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const aspectVariants = ["aspect-[16/10]", "aspect-[4/3]", "aspect-[16/9]"];
+const filters = [
+  "All work",
+  "Brand strategy",
+  "Identity",
+  "Digital design",
+  "Social campaigns",
+  "Content",
+];
+
+const stagger = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 25 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: ANIMATION.ease },
+  },
+};
 
 export default function SelectedWork() {
+  const reduced = useReducedMotion();
+
+  if (reduced) {
+    return <StaticWork />;
+  }
+
   return (
-    <section id="work" className="scroll-mt-24 py-12 sm:py-16 lg:py-20">
+    <section id="work" className="scroll-mt-24 py-14 sm:py-16 lg:py-20">
       <Container>
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <SectionHeading label="Selected work" number="03">
-            Work that speaks for itself.
-          </SectionHeading>
-          <Reveal delay={0.1}>
-            <Button href="/work" variant="ghost" iconDirection="up">
-              View all work
-            </Button>
-          </Reveal>
-        </div>
-
-        {/* Editorial preview — 3 curated projects, intentional rhythm */}
-        <div className="mt-10 flex flex-col gap-10 sm:mt-12 sm:gap-12 lg:mt-14 lg:gap-16">
-          {featuredProjects.map((project, i) => {
-            const flip = i % 2 === 1;
-            return (
-              <article
-                key={project.slug}
-                className="group grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-10"
-              >
-                {/* Media — with small index + blue indicator */}
-                <div
-                  className={cn(
-                    "relative lg:col-span-7",
-                    flip && "lg:order-2 lg:col-start-6"
-                  )}
-                >
-                  {/* Small project index — subtle blue active indicator */}
-                  <div className="mb-3 hidden items-center gap-3 lg:mb-4 lg:flex" aria-hidden="true">
-                    <span className="text-[0.60rem] font-medium tracking-[0.20em] text-accent">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="h-px w-8 bg-accent/60 transition-all duration-500 group-hover:w-12 group-hover:bg-accent" />
-                    <span className="text-[0.60rem] tracking-[0.16em] text-paper/30">/ 03</span>
-                  </div>
-
-                  {/* Ghost depth layer — subtle */}
-                  <div
-                    className="pointer-events-none absolute -bottom-4 -left-4 hidden h-full w-full opacity-[0.07] lg:block"
-                    aria-hidden="true"
-                  >
-                    <Image
-                      src={project.image}
-                      alt=""
-                      aria-hidden="true"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-
-                  <Reveal distance={24}>
-                    <Link href="/work" className="group block">
-                      <div
-                        className={cn(
-                          "relative overflow-hidden border border-paper/10 bg-charcoal",
-                          aspectVariants[i % aspectVariants.length]
-                        )}
-                      >
-                        <Image
-                          src={project.image}
-                          alt={project.alt}
-                          fill
-                          sizes="(min-width: 1024px) 55vw, 100vw"
-                          className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-                        {/* Oversized project number — subtle watermark */}
-                        <span
-                          className="serif-em pointer-events-none absolute -bottom-4 right-3 select-none text-[5rem] leading-none text-paper/[0.07] transition-colors duration-500 group-hover:text-paper/[0.10] sm:text-[6rem] lg:text-[7rem]"
-                          aria-hidden="true"
-                        >
-                          {project.index}
-                        </span>
-
-                        {/* Hover CTA */}
-                        <span className="absolute bottom-5 left-5 flex h-10 w-10 items-center justify-center -translate-x-1 rounded-full bg-accent text-ink opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 sm:bottom-6 sm:left-6 sm:h-11 sm:w-11">
-                          <span aria-hidden="true" className="text-sm">
-                            →
-                          </span>
-                        </span>
-
-                        {/* Folio caption */}
-                        <span className="absolute left-5 top-5 text-[0.60rem] uppercase tracking-[0.22em] text-paper/70 sm:left-6 sm:top-6">
-                          {project.client}
-                        </span>
-                        <span className="absolute right-5 top-5 text-[0.60rem] uppercase tracking-[0.22em] text-paper/50 sm:right-6 sm:top-6">
-                          {project.year}
-                        </span>
-                      </div>
-                    </Link>
-                  </Reveal>
-                </div>
-
-                {/* Editorial text column — vertically aligned */}
-                <div
-                  className={cn(
-                    "flex flex-col justify-center lg:col-span-4",
-                    flip ? "lg:col-start-1 lg:row-start-1" : "lg:col-start-9"
-                  )}
-                >
-                  <Reveal delay={0.1}>
-                    {/* Mobile index */}
-                    <span className="mb-3 flex items-center gap-2 text-[0.60rem] tracking-[0.18em] text-paper/40 lg:hidden" aria-hidden="true">
-                      <span className="text-accent">{String(i + 1).padStart(2, "0")}</span>
-                      <span className="h-px w-6 bg-accent/50" />
-                      <span>0{featuredProjects.length}</span>
-                    </span>
-
-                    {/* Accent line — extends on hover */}
-                    <span
-                      className="block h-px w-10 bg-accent transition-all duration-500 group-hover:w-16"
-                      aria-hidden="true"
-                    />
-
-                    <h3
-                      className="mt-5 text-balance font-medium uppercase tracking-tight text-paper"
-                      style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)", lineHeight: 1.05 }}
-                    >
-                      {project.title}
-                    </h3>
-
-                    <p className="mt-2 text-[0.62rem] uppercase tracking-[0.20em] text-paper/40">
-                      {project.category}
-                    </p>
-
-                    <p className="mt-5 max-w-md text-[0.95rem] leading-relaxed text-paper/55 sm:text-base">
-                      {project.summary}
-                    </p>
-
-                    <p className="mt-5 text-[0.68rem] uppercase tracking-[0.16em] text-paper/30">
-                      {project.services.join(" · ")}
-                    </p>
-
-                    <Link
-                      href="/work"
-                      className="group/link mt-7 inline-flex items-center gap-2 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-paper/70 transition-colors hover:text-accent"
-                    >
-                      <span className="link-underline">View case study</span>
-                      <span
-                        aria-hidden="true"
-                        className="transition-transform duration-300 group-hover/link:translate-x-1"
-                      >
-                        ↗
-                      </span>
-                    </Link>
-                  </Reveal>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-
-        {/* Bottom CTA — premium conclusion, not detached button */}
-        <div className="mt-14 sm:mt-16 lg:mt-20">
-          <div className="border-t border-paper/10" aria-hidden="true" />
-          <Reveal delay={0.06} className="flex flex-col items-center">
-            <Link
-              href="/work"
-              className="group flex w-full items-center justify-between gap-6 py-7 sm:py-8"
+        {/* Header — editorial tension across the horizontal grid */}
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:items-end">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+            className="md:col-span-7"
+          >
+            <motion.div variants={item}>
+              <SectionLabel number="03">Selected work</SectionLabel>
+            </motion.div>
+            <motion.h2
+              variants={item}
+              className="mt-6 text-balance font-medium tracking-tight text-paper"
+              style={{ fontSize: "clamp(2.2rem,4.8vw,3.9rem)", lineHeight: 1.02 }}
             >
-              <span className="flex items-center gap-4">
-                <span className="hidden h-px w-12 bg-paper/15 transition-all duration-500 group-hover:w-16 group-hover:bg-accent/50 sm:block" aria-hidden="true" />
-                <span className="text-[0.70rem] font-medium uppercase tracking-[0.22em] text-paper/60 transition-colors duration-300 group-hover:text-paper">
-                  View all work
-                </span>
-              </span>
-              <span className="flex items-center gap-3">
-                <span className="hidden text-[0.70rem] tracking-[0.14em] text-paper/30 sm:block">Explore the complete portfolio</span>
-                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-paper/15 bg-transparent text-paper/70 transition-all duration-300 group-hover:translate-x-1 group-hover:border-accent group-hover:bg-accent group-hover:text-ink">
+              Work that
+              <br />
+              speaks for itself.
+            </motion.h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+            transition={{ duration: 0.7, ease: ANIMATION.ease, delay: 0.15 }}
+            className="md:col-span-5 md:pl-6 lg:pl-12"
+          >
+            <div className="flex flex-col items-start gap-6">
+              <p className="max-w-md text-base leading-relaxed text-paper/70">
+                Ideas that connect.
+                <br />
+                Design that communicates.
+                <br />
+                Growth that lasts.
+              </p>
+              <p className="max-w-sm text-sm leading-relaxed text-paper/45">
+                Here&apos;s a selection of work we&apos;re proud of.
+              </p>
+              <Link
+                href="/work"
+                className="group inline-flex items-center gap-2.5 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-paper/80 transition-colors duration-300 hover:text-accent"
+              >
+                <span className="link-underline">View all work</span>
+                <span
+                  aria-hidden="true"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                >
                   →
                 </span>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Filter bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+          transition={{ duration: 0.6, ease: ANIMATION.ease, delay: 0.2 }}
+          className="mt-12 border-y border-paper/10 lg:mt-16"
+        >
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-2 py-4 lg:gap-x-9">
+            {filters.map((filter, i) => (
+              <span
+                key={filter}
+                className={cn(
+                  "cursor-default text-[0.66rem] font-medium uppercase tracking-[0.18em] transition-colors duration-300",
+                  i === 0
+                    ? "text-accent"
+                    : "text-paper/45 hover:text-paper"
+                )}
+              >
+                {filter}
               </span>
-            </Link>
-          </Reveal>
-          <div className="border-b border-paper/10" aria-hidden="true" />
+            ))}
+            <span className="ml-auto inline-flex items-center gap-2.5 text-[0.66rem] uppercase tracking-[0.18em] text-paper/45">
+              <span className="hidden h-px w-6 bg-paper/25 sm:block" aria-hidden="true" />
+              Filter
+              <span aria-hidden="true" className="text-paper/70">≡</span>
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Project cards — single cohesive portfolio grid */}
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+          className="mt-8 grid grid-cols-1 gap-6 sm:gap-8 md:mt-10 md:grid-cols-2 lg:mt-12 lg:grid-cols-3"
+        >
+          {featuredProjects.map((project, i) => (
+            <motion.div key={project.slug} variants={item} className="h-full">
+              <ProjectCard project={project} index={i} />
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Bottom CTA panel */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+          transition={{ duration: 0.7, ease: ANIMATION.ease }}
+          className="mt-10 sm:mt-12 lg:mt-16"
+        >
+          <div className="relative overflow-hidden border border-paper/10 bg-charcoal/40">
+            <span
+              className="absolute left-0 top-0 h-full w-px bg-accent/60"
+              aria-hidden="true"
+            />
+            <div className="flex flex-col gap-8 px-6 py-10 sm:px-10 sm:py-12 lg:flex-row lg:items-end lg:justify-between lg:px-14 lg:py-14">
+              <div>
+                <h3
+                  className="text-balance font-medium tracking-tight text-paper"
+                  style={{ fontSize: "clamp(1.7rem,3.4vw,2.6rem)", lineHeight: 1.05 }}
+                >
+                  Great work starts with a conversation.
+                </h3>
+                <p className="mt-4 max-w-md text-base leading-relaxed text-paper/55">
+                  Tell us about your project and let&apos;s build something impactful.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-4 self-start text-[0.7rem] font-medium uppercase tracking-[0.18em] text-paper transition-colors duration-300 hover:text-accent lg:self-end"
+              >
+                <span className="link-underline">Start your project</span>
+                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-paper/20 text-paper/80 transition-all duration-300 group-hover:translate-x-1 group-hover:rotate-45 group-hover:border-accent group-hover:bg-accent group-hover:text-ink">
+                  <span aria-hidden="true">→</span>
+                </span>
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </Container>
+    </section>
+  );
+}
+
+interface ProjectCardProps {
+  project: (typeof featuredProjects)[number];
+  index: number;
+}
+
+/** Exact tag lines per project, matching the portfolio design direction. */
+const projectTags: Record<string, string> = {
+  "wrap-licks": "Brand Strategy  •  Social Campaign",
+  "cavemans-pizzeria": "Identity  •  Menus  •  Campaigns",
+  koffeio: "Web Design  •  UX & UI",
+};
+
+function ProjectCard({ project, index }: ProjectCardProps) {
+  const tags = projectTags[project.slug];
+  return (
+    <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-paper/10 bg-charcoal/50 transition-colors duration-300 hover:border-paper/20">
+      {/* Card header — number / year */}
+      <div className="flex items-center justify-between px-5 pt-5 sm:px-6">
+        <span className="text-[0.6rem] font-medium tracking-[0.2em] text-accent">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span className="text-[0.6rem] uppercase tracking-[0.2em] text-paper/40">
+          {project.year}
+        </span>
+      </div>
+
+      {/* Visual area */}
+      <Link
+        href={`/work#${project.slug}`}
+        className="group/visual relative mx-5 mt-4 block aspect-[16/10] overflow-hidden border border-paper/10 bg-ink sm:mx-6"
+      >
+        <Image
+          src={project.image}
+          alt={project.alt}
+          fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+          className="object-cover object-[50%_30%] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/visual:scale-[1.03]"
+        />
+        {/* Subtle blue geometry behind artwork */}
+        <span
+          className="pointer-events-none absolute right-6 top-6 h-16 w-16 rounded-full border border-accent/30 transition-all duration-500 group-hover/visual:border-accent/50"
+          aria-hidden="true"
+        />
+      </Link>
+
+      {/* Card body */}
+      <div className="flex flex-1 flex-col px-5 pb-5 sm:px-6 sm:pb-6">
+        <h3 className="mt-5 text-xl font-medium tracking-tight text-paper transition-transform duration-300 group-hover:translate-x-0.5 sm:text-2xl">
+          {project.title}
+        </h3>
+        <p className="mt-2.5 text-[0.62rem] uppercase tracking-[0.18em] text-accent/80">
+          {tags}
+        </p>
+        <p className="mt-4 max-w-md text-sm leading-relaxed text-paper/50">
+          {project.summary}
+        </p>
+
+        {/* Footer — case study link + circular arrow */}
+        <div className="mt-auto flex items-center justify-between gap-4 pt-6">
+          <Link
+            href={`/work#${project.slug}`}
+            className="group/link inline-flex items-center gap-2 text-[0.66rem] font-medium uppercase tracking-[0.18em] text-paper/70 transition-colors duration-300 hover:text-accent"
+          >
+            <span className="link-underline">View case study</span>
+            <span
+              aria-hidden="true"
+              className="transition-transform duration-300 group-hover/link:translate-x-1"
+            >
+              →
+            </span>
+          </Link>
+          <Link
+            href={`/work#${project.slug}`}
+            aria-label={`Open ${project.title} case study`}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-paper/15 text-paper/70 transition-all duration-300 group-hover:rotate-45 group-hover:border-accent group-hover:bg-accent group-hover:text-ink"
+          >
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/* Reduced-motion: static, no reveal transforms */
+function StaticWork() {
+  return (
+    <section id="work" className="scroll-mt-24 py-14 sm:py-16 lg:py-20">
+      <Container>
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:items-end">
+          <div className="md:col-span-7">
+            <SectionLabel number="03">Selected work</SectionLabel>
+            <h2
+              className="mt-6 text-balance font-medium tracking-tight text-paper"
+              style={{ fontSize: "clamp(2.2rem,4.8vw,3.9rem)", lineHeight: 1.02 }}
+            >
+              Work that
+              <br />
+              speaks for itself.
+            </h2>
+          </div>
+          <div className="md:col-span-5 md:pl-6 lg:pl-12">
+            <div className="flex flex-col items-start gap-6">
+              <p className="max-w-md text-base leading-relaxed text-paper/70">
+                Ideas that connect.
+                <br />
+                Design that communicates.
+                <br />
+                Growth that lasts.
+              </p>
+              <p className="max-w-sm text-sm leading-relaxed text-paper/45">
+                Here&apos;s a selection of work we&apos;re proud of.
+              </p>
+              <Link
+                href="/work"
+                className="group inline-flex items-center gap-2.5 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-paper/80 transition-colors duration-300 hover:text-accent"
+              >
+                <span className="link-underline">View all work</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 border-y border-paper/10 lg:mt-16">
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-2 py-4 lg:gap-x-9">
+            {filters.map((filter, i) => (
+              <span
+                key={filter}
+                className={cn(
+                  "text-[0.66rem] font-medium uppercase tracking-[0.18em]",
+                  i === 0 ? "text-accent" : "text-paper/45"
+                )}
+              >
+                {filter}
+              </span>
+            ))}
+            <span className="ml-auto inline-flex items-center gap-2.5 text-[0.66rem] uppercase tracking-[0.18em] text-paper/45">
+              <span className="hidden h-px w-6 bg-paper/25 sm:block" aria-hidden="true" />
+              Filter
+              <span aria-hidden="true" className="text-paper/70">≡</span>
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 gap-6 sm:gap-8 md:mt-10 md:grid-cols-2 lg:mt-12 lg:grid-cols-3">
+          {featuredProjects.map((project, i) => (
+            <ProjectCard key={project.slug} project={project} index={i} />
+          ))}
+        </div>
+
+        <div className="mt-10 sm:mt-12 lg:mt-16">
+          <div className="relative overflow-hidden border border-paper/10 bg-charcoal/40">
+            <span
+              className="absolute left-0 top-0 h-full w-px bg-accent/60"
+              aria-hidden="true"
+            />
+            <div className="flex flex-col gap-8 px-6 py-10 sm:px-10 sm:py-12 lg:flex-row lg:items-end lg:justify-between lg:px-14 lg:py-14">
+              <div>
+                <h3
+                  className="text-balance font-medium tracking-tight text-paper"
+                  style={{ fontSize: "clamp(1.7rem,3.4vw,2.6rem)", lineHeight: 1.05 }}
+                >
+                  Great work starts with a conversation.
+                </h3>
+                <p className="mt-4 max-w-md text-base leading-relaxed text-paper/55">
+                  Tell us about your project and let&apos;s build something impactful.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-4 self-start text-[0.7rem] font-medium uppercase tracking-[0.18em] text-paper transition-colors duration-300 hover:text-accent lg:self-end"
+              >
+                <span className="link-underline">Start your project</span>
+                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-paper/20 text-paper/80 transition-colors duration-300 group-hover:rotate-45 group-hover:border-accent group-hover:bg-accent group-hover:text-ink">
+                  <span aria-hidden="true">→</span>
+                </span>
+              </Link>
+            </div>
+          </div>
         </div>
       </Container>
     </section>

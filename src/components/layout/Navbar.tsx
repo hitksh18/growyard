@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
@@ -15,16 +16,17 @@ import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { useIntro } from "@/providers/IntroProgressProvider";
 import MobileMenu from "./MobileMenu";
 
-interface NavItemProps {
-  index: number;
-  href: string;
-  label: string;
-  section?: string;
-  progress: MotionValue<number>;
-  active: boolean;
-  activeSection: string | null;
-}
+/** Sections that have a home section AND a dedicated page route. */
+const NAVIGABLE = new Set([
+  "about",
+  "services",
+  "work",
+  "process",
+  "team",
+  "faq",
+]);
 
+/** Homepage in-page smooth-scroll to a section. Keeps the URL at "/". */
 function scrollToSection(section?: string) {
   if (!section) return;
   const el = document.getElementById(section);
@@ -39,6 +41,17 @@ function scrollToSection(section?: string) {
   }
 }
 
+interface NavItemProps {
+  index: number;
+  href: string;
+  label: string;
+  section?: string;
+  progress: MotionValue<number>;
+  active: boolean;
+  isHome: boolean;
+  activeSection: string | null;
+}
+
 function NavItem({
   index,
   href,
@@ -46,8 +59,10 @@ function NavItem({
   section,
   progress,
   active,
+  isHome,
   activeSection,
 }: NavItemProps) {
+  const router = useRouter();
   const lo = 0.96 + index * 0.006;
   const hi = Math.min(lo + 0.02, 1);
   const revealed = useTransform(progress, [lo, hi], [0, 1]);
@@ -61,11 +76,18 @@ function NavItem({
 
   const isCurrent = activeSection === section;
 
-  // Homepage scroll — programmatic, URL stays "/"
+  // Route-aware navigation:
+  //  - homepage "/"   → smooth-scroll to the in-page section (stay on "/")
+  //  - dedicated page → navigate to the dedicated route /<section>
   const handleClick = (e: React.MouseEvent) => {
-    if (section) {
+    if (section && isHome) {
       e.preventDefault();
       scrollToSection(section);
+      return;
+    }
+    if (section) {
+      e.preventDefault();
+      router.push(`/${section}`);
     }
   };
 
@@ -104,6 +126,7 @@ function NavItem({
 
 export default function Navbar() {
   const { progress, active, isHome } = useIntro();
+  const pathname = usePathname();
   const { scrolled } = useScrollProgress();
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -139,30 +162,65 @@ export default function Navbar() {
   }, [progress, active, open]);
 
   // Scroll-spy over home sections → subtle accent on the active nav item.
+  // Uses ONE scroll listener. The active section is the last navigable section
+  // whose top has scrolled past the detection band. The final "Let's get to
+  // work" (contact) section and the footer are OUTSIDE the navigable set, so
+  // the state is explicitly cleared to null there instead of keeping FAQ lit.
   useEffect(() => {
     if (!isHome) return;
-    const targets: HTMLElement[] = [];
-    for (const item of navigation) {
-      if (item.section) {
-        const el = document.getElementById(item.section);
-        if (el) targets.push(el);
-      }
-    }
-    if (!targets.length) return;
+    const BAND = 0.35; // detection line sits in the upper viewport, below navbar
+    // "contact" is intentionally last — it exists so detection knows we've left faq.
+    const ids = ["about", "services", "work", "process", "team", "faq", "contact"];
+    const sections = ids
+      .map((id) => ({ id, el: document.getElementById(id) }))
+      .filter((s): s is { id: string; el: HTMLElement } => Boolean(s.el));
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveSection((entry.target as HTMLElement).id);
-          }
+    const top = (el: HTMLElement) =>
+      el.getBoundingClientRect().top + window.scrollY;
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const refLine = window.scrollY + window.innerHeight * BAND;
+
+      let current: string | null = null;
+      for (const s of sections) {
+        if (top(s.el) <= refLine) {
+          current = s.id;
+        } else {
+          break;
         }
-      },
-      { rootMargin: "-30% 0px -55% 0px", threshold: 0 }
-    );
-    targets.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+      }
+      // Only navigable sections highlight; contact/footer clear to null.
+      setActiveSection(
+        current && NAVIGABLE.has(current) ? current : null
+      );
+    };
+
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, [isHome]);
+
+  // Route-aware active state.
+  //  - Homepage: driven by the in-page scroll-spy (activeSection state).
+  //  - Dedicated pages: driven by the current route (e.g. /work → "work"),
+  //    so the right item stays active regardless of scroll; browser
+  //    back/forward keeps this in sync because it derives from pathname.
+  const effectiveActive = isHome
+    ? activeSection
+    : NAVIGABLE.has(pathname.slice(1))
+      ? pathname.slice(1)
+      : null;
 
   // Surface (bg + hairline) reveal
   const one = useMotionValue(1);
@@ -237,7 +295,8 @@ export default function Navbar() {
                 section={item.section}
                 progress={progress}
                 active={active}
-                activeSection={activeSection}
+                isHome={isHome}
+                activeSection={effectiveActive}
               />
             ))}
           </nav>
@@ -278,7 +337,7 @@ export default function Navbar() {
       </header>
 
       <AnimatePresence>
-        {open && <MobileMenu onClose={() => setOpen(false)} />}
+        {open && <MobileMenu onClose={() => setOpen(false)} isHome={isHome} />}
       </AnimatePresence>
     </>
   );

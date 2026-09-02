@@ -63,10 +63,16 @@ export function IntroProgressProvider({
   const active = isHome && !reduced;
 
   const raw = useMotionValue(active ? 0 : 1);
+  // Scroll-linked timeline: a sluggish spring here makes `progress` lag behind
+  // the scroll and creep slowly toward its final value, which freezes the hero
+  // on its last frame after the intro completes and delays the release to the
+  // next content. Use a much stiffer, near-critically-damped spring so progress
+  // tracks the scroll almost 1:1 and settles immediately — the intro and the
+  // following content read as ONE continuous animation with no frozen gap.
   const progress = useSpring(raw, {
-    stiffness: 110,
-    damping: 30,
-    mass: 0.95,
+    stiffness: 850,
+    damping: 70,
+    mass: 1,
   });
 
   useEffect(() => {
