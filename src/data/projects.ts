@@ -1,7 +1,7 @@
 import type { Project } from "@/types/project";
 
 /**
- * GrowthYard project data.
+ * GROWTHYARD project data.
  *
  * Known client projects. Descriptions are written at a campaign level and
  * delays are kept honest — every `metrics` value is still `--` until real,

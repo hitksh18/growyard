@@ -34,10 +34,10 @@ function NavItem({
   active,
   activeSection,
 }: NavItemProps) {
-  const lo = 0.8 + index * 0.028;
-  const hi = Math.min(lo + 0.07, 0.99);
+  const lo = 0.88 + index * 0.02;
+  const hi = Math.min(lo + 0.06, 0.99);
   const revealed = useTransform(progress, [lo, hi], [0, 1]);
-  const travel = useTransform(progress, [lo, hi], [-5, 0]);
+  const travel = useTransform(progress, [lo, hi], [-4, 0]);
   const one = useMotionValue(1);
 
   const opacity = useTransform([revealed, one], (latest) =>
@@ -98,11 +98,12 @@ export default function Navbar() {
 
   // Reveal gate applied straight to the DOM after hydration so SSR/client
   // markup stays identical (no React-managed attrs that vary by motion state).
+  // Delayed to ~0.88 so navbar stays hidden while GROWTHYARD manifesto establishes.
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
     const apply = () => {
-      if (active && progress.get() >= 0.85) revealedRef.current = true;
+      if (active && progress.get() >= 0.88) revealedRef.current = true;
       const hidden = active && !open && !revealedRef.current;
       el.style.pointerEvents = hidden ? "none" : "";
       if (hidden) el.setAttribute("inert", "");
@@ -146,20 +147,20 @@ export default function Navbar() {
     scrolledMv.set(scrolled ? 1 : 0);
   }, [scrolled, scrolledMv]);
 
-  const surfaceHome = useTransform(progress, [0.78, 0.95], [0, 1]);
+  const surfaceHome = useTransform(progress, [0.88, 0.97], [0, 1]);
   const surface = useTransform([surfaceHome, scrolledMv], (latest) =>
     active ? latest[0] : isHome ? 1 : latest[1]
   );
 
-  // Logo crossfades in once the intro has settled
-  const logoReveal = useTransform(progress, [0.9, 1], [0, 1]);
+  // Logo crossfades in once the intro has settled — delayed per spec
+  const logoReveal = useTransform(progress, [0.92, 1], [0, 1]);
   const logoOpacity = useTransform([logoReveal, one], (latest) =>
     active ? latest[0] : 1
   );
 
-  // CTA + hamburger
-  const ctaReveal = useTransform(progress, [0.78, 0.9], [0, 1]);
-  const ctaTravel = useTransform(progress, [0.78, 0.9], [-4, 0]);
+  // CTA + hamburger — delayed to match manifesto completion
+  const ctaReveal = useTransform(progress, [0.88, 0.96], [0, 1]);
+  const ctaTravel = useTransform(progress, [0.88, 0.96], [-4, 0]);
   const ctaOpacity = useTransform([ctaReveal, one], (latest) =>
     active ? latest[0] : 1
   );
@@ -185,12 +186,12 @@ export default function Navbar() {
           <motion.span style={{ opacity: logoOpacity }} className="inline-flex">
             <Link
               href="/"
-              aria-label="GrowthYard home"
+              aria-label="GROWTHYARD home"
               className="group flex items-center gap-2 text-paper"
               onClick={() => setOpen(false)}
             >
               <span className="text-[0.8rem] font-semibold tracking-[0.08em] uppercase">
-                GrowthYard
+                GROWTHYARD
               </span>
               <span
                 className="h-1.5 w-1.5 rounded-full bg-accent transition-transform duration-300 group-hover:scale-125"

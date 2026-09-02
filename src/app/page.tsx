@@ -10,7 +10,7 @@ import FinalCTA from "@/components/home/FinalCTA";
 export default function Home() {
   return (
     <>
-      {/* 01 Brand intro + 02 What GrowthYard Is (navbar activates after) */}
+      {/* 01 Brand intro + 02 Manifesto (navbar activates after) */}
       <Hero />
       {/* 03 About */}
       <AboutPreview />

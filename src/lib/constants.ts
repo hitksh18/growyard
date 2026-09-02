@@ -1,5 +1,5 @@
 export const BRAND = {
-  name: "GrowthYard",
+  name: "GROWTHYARD",
   tagline: "Growth Focused. Results Driven.",
   footerTagline: "Design. Creativity. Growth.",
   email: "hello@growyard.agency",

@@ -21,12 +21,12 @@ interface IntroContextValue {
   active: boolean;
   /** prefers-reduced-motion. */
   reduced: boolean;
-  /**
-   * Smoothed intro progress 0..1 across the first TWO viewports of scrolling.
-   * 0 = brand title sequence (wordmark large, navbar hidden).
-   * ~0.5 = "What GrowthYard Is" positioning is reached.
-   * 1 = intro complete — navbar fully revealed and sticky.
-   */
+   /**
+    * Smoothed intro progress 0..1 across the first TWO viewports of scrolling.
+    * 0 = brand title sequence (wordmark large, navbar hidden).
+    * ~0.5 = manifesto positioning is reached.
+    * 1 = intro complete — navbar fully revealed and sticky.
+    */
   progress: MotionValue<number>;
 }
 

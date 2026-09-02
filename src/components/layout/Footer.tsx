@@ -14,7 +14,7 @@ export default function Footer() {
           <div className="flex flex-col lg:col-span-6">
             <Link href="/" className="flex items-center gap-2.5 text-paper">
               <span className="text-sm font-semibold uppercase tracking-[0.08em]">
-                GrowthYard
+                GROWTHYARD
               </span>
               <span
                 className="h-1.5 w-1.5 rounded-full bg-accent transition-transform duration-300 hover:scale-125"
@@ -75,7 +75,7 @@ export default function Footer() {
       {/* Giant editorial wordmark */}
       <div className="mt-20 select-none overflow-hidden px-6 sm:px-8" aria-hidden="true">
         <p className="whitespace-nowrap text-center font-medium leading-none tracking-tight text-paper/[0.04]">
-          <span style={{ fontSize: "clamp(4rem, 13vw, 13rem)" }}>GrowthYard</span>
+          <span style={{ fontSize: "clamp(4rem, 13vw, 13rem)" }}>GROWTHYARD</span>
         </p>
       </div>
 
