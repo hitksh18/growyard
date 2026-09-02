@@ -1,4 +1,5 @@
 import type { TeamMember } from "@/types/team";
+import Link from "next/link";
 import Reveal from "@/components/animations/Reveal";
 
 interface TeamCardProps {
@@ -14,7 +15,12 @@ export default function TeamCard({ member, index = 0 }: TeamCardProps) {
 
   return (
     <Reveal distance={24} delay={index * 0.06}>
-      <article className="group h-full">
+      <Link
+        href={`/team/${member.slug}`}
+        className="group block h-full"
+        aria-label={`${member.name} — ${member.role}`}
+      >
+        <article className="h-full">
         {/* Editorial nameplate — typography-first portrait stand-in */}
         <div className="relative aspect-[4/5] overflow-hidden border border-paper/10 bg-charcoal/30">
           <span className="grid-bg absolute inset-0 opacity-30" aria-hidden="true" />
@@ -57,7 +63,8 @@ export default function TeamCard({ member, index = 0 }: TeamCardProps) {
         <p className="mt-4 text-xs uppercase tracking-[0.14em] text-paper/30">
           {member.focus.map((f) => f).join(" · ")}
         </p>
-      </article>
+        </article>
+      </Link>
     </Reveal>
   );
 }

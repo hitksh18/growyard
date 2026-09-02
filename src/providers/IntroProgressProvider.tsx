@@ -24,10 +24,10 @@ interface IntroContextValue {
   /**
    * Smoothed intro progress 0..1 across the hero scroll timeline.
    *
-   * 0.00 – GROWYARD centered (subtitle visible)
-   * 0.00 → 0.30 – GROWYARD moves upward
-   * 0.30 – GROWYARD locked at top
-   * 0.30 → 0.62 – headlines + keywords reveal (while GROWYARD locked)
+   * 0.00 – GrowthYard centered (subtitle visible)
+   * 0.00 → 0.30 – GrowthYard moves upward
+   * 0.30 – GrowthYard locked at top
+   * 0.30 → 0.62 – headlines + keywords reveal (while GrowthYard locked)
    * 0.62 → 0.74 – full composition holds
    * 0.74 → 1.00 – entire hero exits upward
    * 1.00 – navbar appears, normal homepage scroll begins

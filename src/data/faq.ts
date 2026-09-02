@@ -3,9 +3,9 @@ import type { FaqItem } from "@/types/content";
 export const faq: FaqItem[] = [
   {
     id: "who",
-    question: "Who is GROWYARD for?",
+    question: "Who is GrowthYard for?",
     answer:
-      "GROWYARD works with ambitious businesses — from funded startups to established brands — that need a partner to turn strategy, creativity and digital marketing into measurable growth.",
+      "GrowthYard works with ambitious businesses — from funded startups to established brands — that need a partner to turn strategy, creativity and digital marketing into measurable growth.",
   },
   {
     id: "engagement",

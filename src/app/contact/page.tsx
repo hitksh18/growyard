@@ -8,7 +8,7 @@ import Reveal from "@/components/animations/Reveal";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Start a project with GROWYARD. Tell us where you want to grow and we'll come back with honest ideas and the right approach.",
+    "Start a project with GrowthYard. Tell us where you want to grow and we'll come back with honest ideas and the right approach.",
 };
 
 export default function ContactPage() {

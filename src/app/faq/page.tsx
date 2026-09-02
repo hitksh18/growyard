@@ -7,7 +7,7 @@ import { faq } from "@/data/faq";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Common questions about working with GROWYARD — engagements, timelines, teams and how to start.",
+    "Common questions about working with GrowthYard — engagements, timelines, teams and how to start.",
 };
 
 export default function FAQPage() {

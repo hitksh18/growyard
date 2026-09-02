@@ -21,7 +21,7 @@
 }
 
 :root {
-  --background: #050505;
+  --background: #08080d;
   --foreground: #fafaf9;
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -91,8 +91,8 @@ body {
    Still low opacity so typography remains dominant. */
 .grid-bg {
   background-image:
-    linear-gradient(to right, rgba(175, 185, 210, 0.055) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(175, 185, 210, 0.055) 1px, transparent 1px);
+    linear-gradient(to right, rgba(175, 185, 210, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(175, 185, 210, 0.07) 1px, transparent 1px);
   background-size: 80px 80px;
 }
 
@@ -161,6 +161,25 @@ body {
 .link-underline:hover::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+/* Global ambient background — sits behind all page content (fixed, -z-10).
+   Very faint, heavily-diffused deep-navy glows give the near-black canvas
+   subtle depth and variation between viewport areas, without reading as
+   visible gradients or blobs. The blue stays accent-only and the grid
+   texture (applied per-section) blends naturally on top. */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background:
+    radial-gradient(70% 45% at 50% 0%, rgba(47, 107, 255, 0.10) 0%, transparent 62%),
+    radial-gradient(45% 34% at 88% 16%, rgba(47, 107, 255, 0.05) 0%, transparent 56%),
+    radial-gradient(50% 36% at 10% 48%, rgba(80, 105, 160, 0.06) 0%, transparent 62%),
+    radial-gradient(60% 45% at 50% 52%, rgba(47, 107, 255, 0.04) 0%, transparent 66%),
+    radial-gradient(52% 38% at 82% 80%, rgba(47, 107, 255, 0.045) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(6, 8, 16, 0.35) 0%, rgba(5, 5, 5, 0.45) 100%);
 }
 
 /* Fine film grain overlay (fixed, non-interactive) */

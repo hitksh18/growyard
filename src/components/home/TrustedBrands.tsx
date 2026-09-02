@@ -4,7 +4,7 @@ import Container from "@/components/ui/Container";
 /**
  * Trusted brands strip.
  *
- * Replace the placeholder names below with real GROWYARD client brand
+ * Replace the placeholder names below with real GrowthYard client brand
  * names / logos once they are confirmed. Do not list clients you don't have.
  */
 const brands = ["Brand One", "Brand Two", "Brand Three", "Brand Four", "Brand Five"];

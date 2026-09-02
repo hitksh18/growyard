@@ -7,7 +7,7 @@ import FadeIn from "@/components/animations/FadeIn";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "GROWYARD is an independent creative & growth agency. Not another agency — your growth partner.",
+    "GrowthYard is an independent creative & growth agency. Not another agency — your growth partner.",
 };
 
 export default function AboutPage() {
@@ -27,7 +27,7 @@ export default function AboutPage() {
             <div className="lg:col-span-7">
               <FadeIn delay={0.05}>
                 <p className="text-lg leading-relaxed text-paper/70 sm:text-xl">
-                  GROWYARD exists because most agencies sell hours, not
+                  GrowthYard exists because most agencies sell hours, not
                   outcomes. We pair strategy with creativity and a sharp focus
                   on measurable growth — so every decision pulls toward a
                   result you can point to.

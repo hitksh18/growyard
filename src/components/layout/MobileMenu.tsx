@@ -41,7 +41,7 @@ export default function MobileMenu({ onClose, isHome }: MobileMenuProps) {
       <div className="relative flex h-16 items-center justify-between px-6 sm:px-8 lg:h-20">
         <span className="flex items-center gap-2 text-paper">
           <span className="text-[0.8rem] font-semibold tracking-[0.08em] uppercase">
-            GROWYARD
+            GrowthYard
           </span>
           <span
             className="h-1.5 w-1.5 rounded-full bg-accent"

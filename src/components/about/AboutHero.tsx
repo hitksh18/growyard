@@ -35,7 +35,7 @@ export default function AboutHero() {
           className="label-uppercase mb-8 flex items-center gap-3 text-paper/50"
         >
           <span className="h-px w-8 bg-accent" aria-hidden="true" />
-          About GROWYARD
+          About GrowthYard
         </motion.p>
         <motion.h1
           variants={reduce ? undefined : item}

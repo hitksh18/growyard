@@ -1,7 +1,7 @@
 /**
  * Results / framework.
  *
- * GROWYARD reports honestly. No statistics are listed here until real,
+ * GrowthYard reports honestly. No statistics are listed here until real,
  * verifiable figures exist — instead this drives a "how we measure" section
  * built on real practice, not invented numbers. When actual metrics land,
  * swap any statement for the figure (e.g. { label: "Brands scaled", value: "12" }).

@@ -268,12 +268,12 @@ export default function Navbar() {
           <motion.span style={{ opacity: logoOpacity }} className="inline-flex">
             <Link
               href="/"
-              aria-label="GROWYARD home"
+              aria-label="GrowthYard home"
               className="group flex items-center gap-2 text-paper"
               onClick={() => setOpen(false)}
             >
               <span className="text-[0.8rem] font-semibold tracking-[0.08em] uppercase">
-                GROWYARD
+                GrowthYard
               </span>
               <span
                 className="h-1.5 w-1.5 rounded-full bg-accent transition-transform duration-300 group-hover:scale-125"

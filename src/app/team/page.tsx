@@ -8,7 +8,7 @@ import { team, teamMembers } from "@/data/team";
 export const metadata: Metadata = {
   title: "Team",
   description:
-    "Meet the GROWYARD team — strategy, creative, growth and delivery working directly on your brand.",
+    "Meet the GrowthYard team — strategy, creative, growth and delivery working directly on your brand.",
 };
 
 export default function TeamPage() {

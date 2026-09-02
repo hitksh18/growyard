@@ -7,7 +7,7 @@ import { services } from "@/data/services";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Brand strategy, creative & design, social media, performance marketing, content, web development, SEO and marketing strategy — GROWYARD services built for growth.",
+    "Brand strategy, creative & design, social media, performance marketing, content, web development, SEO and marketing strategy — GrowthYard services built for growth.",
 };
 
 export default function ServicesPage() {

@@ -24,10 +24,10 @@ export default function Hero() {
   }, [vh]);
 
   // Single scroll timeline. progress 0..1 maps to the hero pin distance:
-  //   0.00        – GROWYARD centered (subtitle visible)
-  //   0.00 → 0.30 – GROWYARD moves upward (center → top lock)
-  //   0.30        – GROWYARD locked at top
-  //   0.30 → 0.62 – headlines + keywords reveal (while GROWYARD locked)
+  //   0.00        – GrowthYard centered (subtitle visible)
+  //   0.00 → 0.30 – GrowthYard moves upward (center → top lock)
+  //   0.30        – GrowthYard locked at top
+  //   0.30 → 0.62 – headlines + keywords reveal (while GrowthYard locked)
   //   0.62 → 0.74 – full composition holds
   //   0.74 → 1.00 – entire hero exits upward
   //   1.00        – navbar appears, normal homepage scroll proceeds
@@ -66,7 +66,7 @@ export default function Hero() {
   // Every revealed subheading: opacity 0→1, slight rise 22→0, blur 8→0. Blur
   // always resolves fully once its window ends, so nothing stays blurred.
   // The subtitle is part of the initial centered composition and stays fully
-  // visible from progress 0. Reveals happen only while GROWYARD is locked.
+  // visible from progress 0. Reveals happen only while GrowthYard is locked.
 
   // s2 — "We don't just make brands look better."
   const s2Op = useTransform(progress, [0.32, 0.42], [0, 1]);
@@ -90,7 +90,7 @@ export default function Hero() {
     return (
       <section
         id="hero"
-        aria-label="GROWYARD — brand intro"
+        aria-label="GrowthYard — brand intro"
         className="relative overflow-hidden"
       >
         <div className="bg-tonal absolute inset-0" aria-hidden="true" />
@@ -102,7 +102,7 @@ export default function Hero() {
         <div className="vignette absolute inset-0 opacity-60" aria-hidden="true" />
         <div className="relative flex min-h-svh flex-col items-center justify-center px-6 py-28 text-center sm:px-8 lg:px-12">
           <h1 className="inline-flex max-w-full items-center justify-center gap-[0.42em] font-semibold uppercase leading-none tracking-[0.09em] text-paper text-[clamp(2.6rem,10vw,5.2rem)] lg:text-[clamp(5.2rem,8.4vw,8.8rem)]">
-            GROWYARD
+            GrowthYard
             <span className="h-[0.46em] w-[0.46em] rounded-full bg-accent" aria-hidden="true" />
           </h1>
           <p className="label-uppercase mt-8 flex items-center gap-4 text-paper/60">
@@ -131,7 +131,7 @@ export default function Hero() {
   }
 
   return (
-    <section id="hero" aria-label="GROWYARD — brand intro" className="relative">
+    <section id="hero" aria-label="GrowthYard — brand intro" className="relative">
       {/* Background */}
       <div className="bg-tonal absolute inset-0" aria-hidden="true" />
       <motion.div style={{ opacity: gridOpacity }} className="grid-bg absolute inset-0" aria-hidden="true" />
@@ -146,16 +146,16 @@ export default function Hero() {
       <div className="relative h-[400vh]">
         {/* Sticky viewport */}
         <div className="sticky top-0 flex h-svh items-center justify-center overflow-hidden">
-          {/* GROWYARD + subtitle are the perfectly-centered anchor. The reveal
+          {/* GrowthYard + subtitle are the perfectly-centered anchor. The reveal
               subheadings hang below the subtitle via absolute positioning, so
-              GROWYARD stays exactly centered at load. The whole thing is ONE
+              GrowthYard stays exactly centered at load. The whole thing is ONE
               unit driven by brandY, so it locks and exits together. */}
           <motion.div
             style={{ y: brandY, scale: brandScale }}
             className="relative flex flex-col items-center justify-center will-change-transform"
           >
             <h1 className="inline-flex max-w-full items-center justify-center gap-[0.42em] font-semibold uppercase leading-none tracking-[0.09em] text-paper text-[clamp(2.55rem,10.5vw,4.8rem)] sm:text-[clamp(3rem,9vw,6rem)] lg:text-[clamp(5.4rem,8.6vw,9rem)]">
-              GROWYARD
+              GrowthYard
               <span className="h-[0.44em] w-[0.44em] rounded-full bg-accent" aria-hidden="true" />
             </h1>
             <p className="mt-6 flex items-center gap-3 text-paper/60 sm:mt-8 sm:gap-4">

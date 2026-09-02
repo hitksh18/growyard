@@ -1,9 +1,11 @@
 export const BRAND = {
-  name: "GROWYARD",
+  name: "GrowthYard",
   tagline: "Growth Focused. Results Driven.",
   footerTagline: "Design. Creativity. Growth.",
-  email: "hello@growyard.agency",
-  location: "Working worldwide",
+  email: "hello@growthyard.co.in",
+  location: "Hyderabad, India",
+  instagram: "https://www.instagram.com/growthyard_media/",
+  linkedin: "https://linkedin.com/company/growthyard",
 };
 
 export const ROUTES = {

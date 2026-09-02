@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: [
-    "GROWYARD",
+    "GrowthYard",
     "creative agency",
     "growth agency",
     "digital marketing",
@@ -71,6 +71,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${serif.variable} h-full scroll-smooth antialiased`}
     >
       <body id="top" className="flex min-h-full flex-col bg-ink text-paper">
+        <div className="ambient-bg" aria-hidden="true" />
         <IntroProgressProvider>
           <Navbar />
           <main className="flex-1">{children}</main>

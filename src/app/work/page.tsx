@@ -7,7 +7,7 @@ import { projects } from "@/data/projects";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Selected projects from GROWYARD — brand, web, social and performance work built to drive measurable growth.",
+    "Selected projects from GrowthYard — brand, web, social and performance work built to drive measurable growth.",
 };
 
 export default function WorkPage() {
@@ -17,7 +17,7 @@ export default function WorkPage() {
         <SectionHeading
           label="Work"
           number="01"
-          description="A selection of projects where strategy, creative and growth come together. New case studies are added as real GROWYARD work ships."
+          description="A selection of projects where strategy, creative and growth come together. New case studies are added as real GrowthYard work ships."
         >
           Work that moves the needle.
         </SectionHeading>

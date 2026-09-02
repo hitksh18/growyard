@@ -9,7 +9,7 @@ import { formatDate } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Insights",
   description:
-    "Notes on strategy, design and growth from the GROWYARD team.",
+    "Notes on strategy, design and growth from the GrowthYard team.",
 };
 
 export default function InsightsPage() {
