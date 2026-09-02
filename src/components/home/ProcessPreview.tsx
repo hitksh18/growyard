@@ -1,7 +1,7 @@
-import Link from "next/link";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Container from "@/components/ui/Container";
 import Reveal from "@/components/animations/Reveal";
+import ReturnNavLink from "@/components/ui/ReturnNavLink";
 import ProcessTimeline from "@/components/process/ProcessTimeline";
 import { processSteps } from "@/data/process";
 
@@ -14,7 +14,8 @@ export default function ProcessPreview() {
             From first idea to real growth.
           </SectionHeading>
           <Reveal delay={0.1}>
-            <Link
+            <ReturnNavLink
+              section="process"
               href="/process"
               className="group inline-flex items-center gap-2 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-paper/70 transition-colors hover:text-accent"
             >
@@ -25,7 +26,7 @@ export default function ProcessPreview() {
               >
                 →
               </span>
-            </Link>
+            </ReturnNavLink>
           </Reveal>
         </div>
 

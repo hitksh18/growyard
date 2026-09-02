@@ -4,6 +4,7 @@ import Link from "next/link";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Container from "@/components/ui/Container";
 import Reveal from "@/components/animations/Reveal";
+import { rememberReturnSection } from "@/lib/returnNav";
 import { services } from "@/data/services";
 
 export default function ServicesPreview() {
@@ -18,6 +19,7 @@ export default function ServicesPreview() {
           <Reveal delay={0.1}>
             <Link
               href="/services"
+              onClick={() => rememberReturnSection("services")}
               className="group inline-flex items-center gap-2 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-paper/70 transition-colors hover:text-accent"
             >
               <span className="link-underline">All services</span>
@@ -46,6 +48,7 @@ export default function ServicesPreview() {
 
                     <Link
                       href={`/services#${service.slug}`}
+                      onClick={() => rememberReturnSection("services")}
                       className="grid grid-cols-12 items-center gap-4 py-7 pl-4 sm:py-8"
                     >
                       <span

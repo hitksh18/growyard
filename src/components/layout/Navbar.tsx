@@ -14,6 +14,7 @@ import { navigation } from "@/data/navigation";
 import { cn } from "@/lib/utils";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { useIntro } from "@/providers/IntroProgressProvider";
+import { consumeReturnSection } from "@/lib/returnNav";
 import MobileMenu from "./MobileMenu";
 
 /** Sections that have a home section AND a dedicated page route. */
@@ -127,9 +128,25 @@ function NavItem({
 export default function Navbar() {
   const { progress, active, isHome } = useIntro();
   const pathname = usePathname();
+  const router = useRouter();
   const { scrolled } = useScrollProgress();
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
+
+  // Logo navigation: on a dedicated page, return to the homepage section the
+  // user came from (skipping the intro) via a clean ?section= query signal. On
+  // direct visits, go to the normal homepage entry point. On the homepage
+  // itself, just return home.
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setOpen(false);
+    if (!isHome) {
+      const section = consumeReturnSection();
+      router.push(section ? `/?section=${section}` : "/");
+    } else {
+      router.push("/");
+    }
+  };
 
   const headerRef = useRef<HTMLElement>(null);
   // One-way latch: once the intro reveals the navbar it stays for good.
@@ -270,7 +287,7 @@ export default function Navbar() {
               href="/"
               aria-label="GrowthYard home"
               className="group flex items-center gap-2 text-paper"
-              onClick={() => setOpen(false)}
+              onClick={handleLogoClick}
             >
               <span className="text-[0.8rem] font-semibold tracking-[0.08em] uppercase">
                 GrowthYard

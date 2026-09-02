@@ -8,6 +8,7 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import { featuredProjects } from "@/data/projects";
 import { ANIMATION } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { rememberReturnSection } from "@/lib/returnNav";
 
 const filters = [
   "All work",
@@ -87,6 +88,7 @@ export default function SelectedWork() {
               </p>
               <Link
                 href="/work"
+                onClick={() => rememberReturnSection("work")}
                 className="group inline-flex items-center gap-2.5 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-paper/80 transition-colors duration-300 hover:text-accent"
               >
                 <span className="link-underline">View all work</span>
@@ -217,6 +219,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
       {/* Visual area */}
       <Link
         href={`/work#${project.slug}`}
+        onClick={() => rememberReturnSection("work")}
         className="group/visual relative mx-5 mt-4 block aspect-[16/10] overflow-hidden border border-paper/10 bg-ink sm:mx-6"
       >
         <Image
@@ -249,6 +252,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         <div className="mt-auto flex items-center justify-between gap-4 pt-6">
           <Link
             href={`/work#${project.slug}`}
+            onClick={() => rememberReturnSection("work")}
             className="group/link inline-flex items-center gap-2 text-[0.66rem] font-medium uppercase tracking-[0.18em] text-paper/70 transition-colors duration-300 hover:text-accent"
           >
             <span className="link-underline">View case study</span>
@@ -261,6 +265,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
           </Link>
           <Link
             href={`/work#${project.slug}`}
+            onClick={() => rememberReturnSection("work")}
             aria-label={`Open ${project.title} case study`}
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-paper/15 text-paper/70 transition-all duration-300 group-hover:rotate-45 group-hover:border-accent group-hover:bg-accent group-hover:text-ink"
           >
@@ -303,6 +308,7 @@ function StaticWork() {
               </p>
               <Link
                 href="/work"
+                onClick={() => rememberReturnSection("work")}
                 className="group inline-flex items-center gap-2.5 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-paper/80 transition-colors duration-300 hover:text-accent"
               >
                 <span className="link-underline">View all work</span>

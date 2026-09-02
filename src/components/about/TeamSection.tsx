@@ -1,5 +1,6 @@
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ReturnNavLink from "@/components/ui/ReturnNavLink";
 import TeamCard from "./TeamCard";
 import { team, teamMembers } from "@/data/team";
 
@@ -19,6 +20,19 @@ export default function TeamSection({ number = "05" }: TeamSectionProps) {
             <TeamCard key={member.slug} member={member} index={i} />
           ))}
         </div>
+        <ReturnNavLink
+          section="team"
+          href="/team"
+          className="group mt-16 inline-flex items-center gap-2.5 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-paper/70 transition-colors duration-300 hover:text-accent lg:mt-20"
+        >
+          <span className="link-underline">View complete team</span>
+          <span
+            aria-hidden="true"
+            className="transition-transform duration-300 group-hover:translate-x-1"
+          >
+            →
+          </span>
+        </ReturnNavLink>
       </Container>
     </section>
   );

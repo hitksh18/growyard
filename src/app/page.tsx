@@ -1,4 +1,5 @@
 import Hero from "@/components/home/Hero";
+import HomeSectionRestore from "@/components/home/HomeSectionRestore";
 import AboutPreview from "@/components/home/AboutPreview";
 import ServicesPreview from "@/components/home/ServicesPreview";
 import SelectedWork from "@/components/home/SelectedWork";
@@ -10,6 +11,8 @@ import FinalCTA from "@/components/home/FinalCTA";
 export default function Home() {
   return (
     <>
+      {/* Restore scroll to originating section when returning via the logo */}
+      <HomeSectionRestore />
       {/* 01 Brand intro + 02 Manifesto (navbar activates after) */}
       <Hero />
       {/* 03 About */}
