@@ -21,12 +21,17 @@ interface IntroContextValue {
   active: boolean;
   /** prefers-reduced-motion. */
   reduced: boolean;
-   /**
-    * Smoothed intro progress 0..1 across the first TWO viewports of scrolling.
-    * 0 = brand title sequence (wordmark large, navbar hidden).
-    * ~0.5 = manifesto positioning is reached.
-    * 1 = intro complete — navbar fully revealed and sticky.
-    */
+  /**
+   * Smoothed intro progress 0..1 across the hero scroll timeline.
+   *
+   * 0.00 – GROWYARD centered (subtitle visible)
+   * 0.00 → 0.30 – GROWYARD moves upward
+   * 0.30 – GROWYARD locked at top
+   * 0.30 → 0.62 – headlines + keywords reveal (while GROWYARD locked)
+   * 0.62 → 0.74 – full composition holds
+   * 0.74 → 1.00 – entire hero exits upward
+   * 1.00 – navbar appears, normal homepage scroll begins
+   */
   progress: MotionValue<number>;
 }
 
@@ -39,6 +44,13 @@ export function useIntro(): IntroContextValue {
   }
   return ctx;
 }
+
+// The hero timeline container is 400vh tall. With `sticky top-0` it stays
+// pinned for (400vh - 100vh) = 300vh of scroll. progress 0..1 maps to that
+// pin distance, so progress hits 1 exactly as the hero releases and the
+// navbar takes over.
+const HERO_CONTAINER_VIEWPORTS = 4;
+const HERO_PIN_VIEWPORTS = HERO_CONTAINER_VIEWPORTS - 1; // 3
 
 export function IntroProgressProvider({
   children,
@@ -67,9 +79,8 @@ export function IntroProgressProvider({
     const update = () => {
       raf = 0;
       const vh = window.innerHeight || 1;
-      // Hero scroll container is 260svh (≈2.6 viewports) — deterministic staged
-      // 0-35% move, 35-55% hold, 55-90% tagline, 90-100% exit
-      const clamped = Math.max(0, Math.min(1, window.scrollY / (2.6 * vh)));
+      const pinDistance = HERO_PIN_VIEWPORTS * vh;
+      const clamped = Math.max(0, Math.min(1, window.scrollY / pinDistance));
       raw.set(clamped);
     };
     const onScroll = () => {

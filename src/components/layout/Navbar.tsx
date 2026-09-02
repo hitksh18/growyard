@@ -48,8 +48,8 @@ function NavItem({
   active,
   activeSection,
 }: NavItemProps) {
-  const lo = 0.88 + index * 0.02;
-  const hi = Math.min(lo + 0.06, 0.99);
+  const lo = 0.96 + index * 0.006;
+  const hi = Math.min(lo + 0.02, 1);
   const revealed = useTransform(progress, [lo, hi], [0, 1]);
   const travel = useTransform(progress, [lo, hi], [-4, 0]);
   const one = useMotionValue(1);
@@ -121,12 +121,13 @@ export default function Navbar() {
 
   // Reveal gate applied straight to the DOM after hydration so SSR/client
   // markup stays identical (no React-managed attrs that vary by motion state).
-  // Delayed to ~0.88 so navbar stays hidden while GROWYARD manifesto establishes.
+  // Delayed to ~0.98 so the navbar stays completely hidden until the hero has
+  // finished exiting, then stays revealed for good.
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
     const apply = () => {
-      if (active && progress.get() >= 0.88) revealedRef.current = true;
+      if (active && progress.get() >= 0.98) revealedRef.current = true;
       const hidden = active && !open && !revealedRef.current;
       el.style.pointerEvents = hidden ? "none" : "";
       if (hidden) el.setAttribute("inert", "");
@@ -170,20 +171,20 @@ export default function Navbar() {
     scrolledMv.set(scrolled ? 1 : 0);
   }, [scrolled, scrolledMv]);
 
-  const surfaceHome = useTransform(progress, [0.88, 0.97], [0, 1]);
+  const surfaceHome = useTransform(progress, [0.94, 1], [0, 1]);
   const surface = useTransform([surfaceHome, scrolledMv], (latest) =>
     active ? latest[0] : isHome ? 1 : latest[1]
   );
 
-  // Logo crossfades in once the intro has settled — delayed per spec
-  const logoReveal = useTransform(progress, [0.92, 1], [0, 1]);
+  // Logo crossfades in once the hero has fully exited — delayed per spec
+  const logoReveal = useTransform(progress, [0.97, 1], [0, 1]);
   const logoOpacity = useTransform([logoReveal, one], (latest) =>
     active ? latest[0] : 1
   );
 
-  // CTA + hamburger — delayed to match manifesto completion
-  const ctaReveal = useTransform(progress, [0.88, 0.96], [0, 1]);
-  const ctaTravel = useTransform(progress, [0.88, 0.96], [-4, 0]);
+  // CTA + hamburger — delayed to match hero completion
+  const ctaReveal = useTransform(progress, [0.94, 1], [0, 1]);
+  const ctaTravel = useTransform(progress, [0.94, 1], [-4, 0]);
   const ctaOpacity = useTransform([ctaReveal, one], (latest) =>
     active ? latest[0] : 1
   );
