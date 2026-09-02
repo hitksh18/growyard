@@ -11,7 +11,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "placeholder-1",
     quote:
-      "Replace this with a real client testimonial about working with GROWTHYARD.",
+      "Replace this with a real client testimonial about working with GROWYARD.",
     author: "Client Name",
     role: "Role",
     company: "Company",

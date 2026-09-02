@@ -4,7 +4,7 @@ export const siteConfig = {
   name: BRAND.name,
   tagline: BRAND.tagline,
   description:
-    "GROWTHYARD is a creative marketing and growth agency helping ambitious businesses build stronger brands, create demand, generate leads and grow.",
+    "GROWYARD is a creative marketing and growth agency helping ambitious businesses build stronger brands, create demand, generate leads and grow.",
   url: "https://growyard.agency",
   ogImage: "/images/general/og.svg",
   email: BRAND.email,

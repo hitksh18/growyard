@@ -52,7 +52,7 @@ export default function Hero() {
     return (
       <section
         id="hero"
-        aria-label="GROWTHYARD — brand intro"
+        aria-label="GROWYARD — brand intro"
         className="relative overflow-hidden"
       >
         <div className="bg-tonal absolute inset-0" aria-hidden="true" />
@@ -63,7 +63,7 @@ export default function Hero() {
         {/* 01 — BRAND INTRO (static for reduced motion) */}
         <div className="relative flex min-h-svh flex-col items-center justify-center px-6 text-center sm:px-8 lg:px-12">
           <h1 className="inline-flex max-w-full items-center justify-center gap-[0.42em] font-semibold uppercase leading-none tracking-[0.09em] text-paper text-[clamp(2.6rem,10vw,5.2rem)] lg:text-[clamp(5.2rem,8.4vw,8.8rem)]">
-            GROWTHYARD
+            GROWYARD
             <span className="h-[0.46em] w-[0.46em] rounded-full bg-accent" aria-hidden="true" />
           </h1>
           <p className="label-uppercase mt-8 flex items-center gap-4 text-paper/60">
@@ -106,7 +106,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      aria-label="GROWTHYARD — brand intro"
+      aria-label="GROWYARD — brand intro"
       className="relative"
     >
       {/* Background system */}
@@ -140,7 +140,7 @@ export default function Hero() {
                 }}
                 className="inline-flex max-w-full items-center justify-center gap-[0.42em] font-semibold uppercase leading-none tracking-[0.09em] text-paper will-change-transform text-[clamp(2.55rem,10.5vw,4.8rem)] sm:text-[clamp(3rem,9vw,6rem)] lg:text-[clamp(5.4rem,8.6vw,9rem)]"
               >
-                GROWTHYARD
+                GROWYARD
                 <span className="h-[0.44em] w-[0.44em] rounded-full bg-accent" aria-hidden="true" />
               </motion.h1>
 

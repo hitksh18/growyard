@@ -98,7 +98,7 @@ export default function Navbar() {
 
   // Reveal gate applied straight to the DOM after hydration so SSR/client
   // markup stays identical (no React-managed attrs that vary by motion state).
-  // Delayed to ~0.88 so navbar stays hidden while GROWTHYARD manifesto establishes.
+  // Delayed to ~0.88 so navbar stays hidden while GROWYARD manifesto establishes.
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
@@ -186,12 +186,12 @@ export default function Navbar() {
           <motion.span style={{ opacity: logoOpacity }} className="inline-flex">
             <Link
               href="/"
-              aria-label="GROWTHYARD home"
+              aria-label="GROWYARD home"
               className="group flex items-center gap-2 text-paper"
               onClick={() => setOpen(false)}
             >
               <span className="text-[0.8rem] font-semibold tracking-[0.08em] uppercase">
-                GROWTHYARD
+                GROWYARD
               </span>
               <span
                 className="h-1.5 w-1.5 rounded-full bg-accent transition-transform duration-300 group-hover:scale-125"

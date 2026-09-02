@@ -1,9 +1,9 @@
 import type { TeamSection, TeamMember } from "@/types/team";
 
 /**
- * GROWTHYARD team.
+ * GROWYARD team.
  *
- * The four names below are the real GROWTHYARD team. Role lines are editable
+ * The four names below are the real GROWYARD team. Role lines are editable
  * placeholders — adjust to match actual titles. No photos exist yet, so cards
  * render typography-first (initial letters + focus areas).
  */

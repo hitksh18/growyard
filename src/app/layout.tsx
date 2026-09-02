@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: [
-    "GROWTHYARD",
+    "GROWYARD",
     "creative agency",
     "growth agency",
     "digital marketing",

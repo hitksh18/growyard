@@ -93,7 +93,7 @@ export default function AboutPreview() {
 
             <Reveal delay={0.12}>
               <p className="mt-8 max-w-2xl text-base leading-relaxed text-paper/60 sm:text-lg">
-                GROWTHYARD is an independent, creatively-led team that treats
+                GROWYARD is an independent, creatively-led team that treats
                 your growth as our own — sharp strategy, bold creative and
                 disciplined marketing under one roof.
               </p>

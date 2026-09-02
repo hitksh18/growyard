@@ -7,7 +7,7 @@ import { processSteps } from "@/data/process";
 export const metadata: Metadata = {
   title: "Process",
   description:
-    "Discovery, strategy, design, development, launch and growth — the GrowthYard process engineered for measurable results.",
+    "Discovery, strategy, design, development, launch and growth — the GROWYARD process engineered for measurable results.",
 };
 
 export default function ProcessPage() {

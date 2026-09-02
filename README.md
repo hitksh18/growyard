@@ -1,8 +1,8 @@
-# GrowthYard
+# GROWYARD
 
 **Growth Focused. Results Driven.**
 
-GrowthYard is a creative marketing & growth agency website built with Next.js (App Router), TypeScript, Tailwind CSS v4, Framer Motion, Lucide React and Next/Image.
+GROWYARD is a creative marketing & growth agency website built with Next.js (App Router), TypeScript, Tailwind CSS v4, Framer Motion, Lucide React and Next/Image.
 
 ## Stack
 
