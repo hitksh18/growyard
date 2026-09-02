@@ -93,9 +93,9 @@ export default function Footer() {
         </div>
       </Container>
 
-      {/* Giant editorial wordmark */}
-      <div className="mt-20 select-none overflow-hidden px-6 sm:px-8" aria-hidden="true">
-        <p className="whitespace-nowrap text-center font-medium leading-none tracking-tight text-paper/[0.04]">
+      {/* Giant editorial wordmark — restored subtle watermark, compact */}
+      <div className="mt-12 sm:mt-16 select-none overflow-hidden px-6 sm:px-8" aria-hidden="true">
+        <p className="whitespace-nowrap text-center font-medium leading-none tracking-tight text-paper/[0.06]">
           <span style={{ fontSize: "clamp(4rem, 13vw, 13rem)" }}>GROWYARD</span>
         </p>
       </div>

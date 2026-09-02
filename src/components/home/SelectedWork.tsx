@@ -11,9 +11,9 @@ const aspectVariants = ["aspect-[16/10]", "aspect-[4/3]", "aspect-[16/9]"];
 
 export default function SelectedWork() {
   return (
-    <section id="work" className="scroll-mt-24 py-24 lg:py-36">
+    <section id="work" className="scroll-mt-24 py-12 sm:py-16 lg:py-20">
       <Container>
-        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeading label="Selected work" number="03">
             Work that speaks for itself.
           </SectionHeading>
@@ -24,7 +24,7 @@ export default function SelectedWork() {
           </Reveal>
         </div>
 
-        <div className="mt-20 flex flex-col gap-28 lg:gap-40">
+        <div className="mt-10 flex flex-col gap-12 sm:mt-12 sm:gap-16 lg:mt-14 lg:gap-20">
           {featuredProjects.map((project, i) => {
             const flip = i % 2 === 1;
             return (
@@ -146,6 +146,18 @@ export default function SelectedWork() {
             );
           })}
         </div>
+
+        <Reveal delay={0.08} className="mt-12 flex justify-center sm:mt-14 lg:mt-16">
+          <Link
+            href="/work"
+            className="group inline-flex items-center gap-3 border border-paper/15 bg-transparent px-8 py-3.5 text-[0.70rem] font-medium uppercase tracking-[0.18em] text-paper transition-all duration-300 hover:border-accent hover:bg-accent/10 hover:text-accent"
+          >
+            View all work
+            <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
+        </Reveal>
       </Container>
     </section>
   );
