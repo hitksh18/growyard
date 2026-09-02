@@ -6,7 +6,10 @@ import Reveal from "@/components/animations/Reveal";
 
 export default function FinalCTA() {
   return (
-    <section className="relative overflow-hidden border-t border-paper/10 py-24 lg:py-32">
+    <section
+      id="contact"
+      className="relative scroll-mt-24 overflow-hidden border-t border-paper/10 py-24 lg:py-32"
+    >
       <div
         className="glow-behind absolute left-1/2 top-[-30%] -z-10 h-[70%] w-[90%] -translate-x-1/2 opacity-70"
         aria-hidden="true"

@@ -70,7 +70,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${serif.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-ink text-paper">
+      <body id="top" className="flex min-h-full flex-col bg-ink text-paper">
         <IntroProgressProvider>
           <Navbar />
           <main className="flex-1">{children}</main>
