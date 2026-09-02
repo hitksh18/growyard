@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { IntroProgressProvider } from "@/providers/IntroProgressProvider";
+import { TeamModalProvider } from "@/providers/TeamModalProvider";
 import { siteConfig } from "@/data/site";
 
 const geistSans = Geist({
@@ -73,9 +74,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body id="top" className="flex min-h-full flex-col bg-ink text-paper">
         <div className="ambient-bg" aria-hidden="true" />
         <IntroProgressProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <TeamModalProvider>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </TeamModalProvider>
         </IntroProgressProvider>
       </body>
     </html>

@@ -1,6 +1,8 @@
-import Link from "next/link";
+"use client";
+
 import type { TeamMember } from "@/types/team";
 import Reveal from "@/components/animations/Reveal";
+import { useTeamModal } from "@/providers/TeamModalProvider";
 
 interface TeamDirectoryCardProps {
   member: TeamMember;
@@ -11,6 +13,7 @@ export default function TeamDirectoryCard({
   member,
   index = 0,
 }: TeamDirectoryCardProps) {
+  const { openMember } = useTeamModal();
   const initials = member.name
     .split(" ")
     .map((n) => n.charAt(0))
@@ -20,9 +23,10 @@ export default function TeamDirectoryCard({
 
   return (
     <Reveal distance={24} delay={index * 0.06}>
-      <Link
-        href={`/team/${member.slug}`}
-        className="group block h-full"
+      <button
+        type="button"
+        onClick={() => openMember(member)}
+        className="group block h-full w-full text-left"
         aria-label={`${member.name} — ${role}`}
       >
         <article className="relative h-full">
@@ -72,7 +76,7 @@ export default function TeamDirectoryCard({
             </p>
           </div>
         </article>
-      </Link>
+      </button>
     </Reveal>
   );
 }

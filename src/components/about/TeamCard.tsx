@@ -1,6 +1,8 @@
+"use client";
+
 import type { TeamMember } from "@/types/team";
-import Link from "next/link";
 import Reveal from "@/components/animations/Reveal";
+import { useTeamModal } from "@/providers/TeamModalProvider";
 
 interface TeamCardProps {
   member: TeamMember;
@@ -8,6 +10,7 @@ interface TeamCardProps {
 }
 
 export default function TeamCard({ member, index = 0 }: TeamCardProps) {
+  const { openMember } = useTeamModal();
   const initials = member.name
     .split(" ")
     .map((n) => n.charAt(0))
@@ -15,9 +18,10 @@ export default function TeamCard({ member, index = 0 }: TeamCardProps) {
 
   return (
     <Reveal distance={24} delay={index * 0.06}>
-      <Link
-        href={`/team/${member.slug}`}
-        className="group block h-full"
+      <button
+        type="button"
+        onClick={() => openMember(member)}
+        className="group block h-full w-full text-left"
         aria-label={`${member.name} — ${member.role}`}
       >
         <article className="h-full">
@@ -64,7 +68,7 @@ export default function TeamCard({ member, index = 0 }: TeamCardProps) {
           {member.focus.map((f) => f).join(" · ")}
         </p>
         </article>
-      </Link>
+      </button>
     </Reveal>
   );
 }
