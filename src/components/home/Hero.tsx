@@ -12,41 +12,45 @@ const principles = [
 export default function Hero() {
   const { progress, reduced } = useIntro();
 
-  // Brand wordmark motion — remains dominant, only slight scale reduction
-  const wordmarkY = useTransform(progress, [0, 0.52], [0, -56]);
-  const wordmarkScale = useTransform(progress, [0, 0.62], [1, 0.9]);
-  const wordmarkOpacity = useTransform(progress, [0.78, 0.96], [1, 0]);
+  // 1-3 — GROWYARD: CENTER → MOVE UP → SETTLE → HOLD
+  // Starts centered, travels upward, then STOPS. Final position upper-portion.
+  // Range clamp ensures HOLD after 0.42.
+  const wordmarkY = useTransform(progress, [0, 0.38, 0.42, 1], [0, -108, -124, -124]);
+  const wordmarkScale = useTransform(progress, [0, 0.42, 1], [1, 0.92, 0.92]);
+  const wordmarkOpacity = useTransform(progress, [0.84, 0.97], [1, 0]);
 
-  const taglineOpacity = useTransform(progress, [0, 0.24], [1, 0]);
-  const taglineY = useTransform(progress, [0, 0.24], [0, -10]);
+  const taglineOpacity = useTransform(progress, [0, 0.22], [1, 0]);
+  const taglineY = useTransform(progress, [0, 0.22], [0, -10]);
 
   // Background subtle movement — very restrained
   const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.9, 0.55, 0.3]);
-  const gridOpacity = useTransform(progress, [0, 0.6], [0.38, 0.18]);
+  const gridOpacity = useTransform(progress, [0, 0.6], [0.48, 0.28]);
 
-  // Manifesto — appears once brand has settled toward upper-center
-  const manifestoOpacity = useTransform(progress, [0.28, 0.48], [0, 1]);
-  const manifestoY = useTransform(progress, [0.28, 0.48], [22, 0]);
-  const manifestoBlurVal = useTransform(progress, [0.28, 0.48], [8, 0]);
+  // 4 — MANIFESTO: comes AFTER logo settles (starts at ~0.52)
+  const manifestoOpacity = useTransform(progress, [0.52, 0.68], [0, 1]);
+  const manifestoY = useTransform(progress, [0.52, 0.68], [22, 0]);
+  const manifestoBlurVal = useTransform(progress, [0.52, 0.68], [8, 0]);
   const manifestoFilter = useTransform(manifestoBlurVal, (v) => `blur(${v}px)`);
 
-  // "We make them matter." — slightly delayed, more expressive entrance
-  const emphasisOpacity = useTransform(progress, [0.36, 0.56], [0, 1]);
-  const emphasisY = useTransform(progress, [0.36, 0.56], [18, 0]);
+  // "We make them matter." — staggered after first line, premium
+  const emphasisOpacity = useTransform(progress, [0.60, 0.76], [0, 1]);
+  const emphasisY = useTransform(progress, [0.60, 0.76], [16, 0]);
+  const emphasisBlurVal = useTransform(progress, [0.60, 0.76], [6, 0]);
+  const emphasisFilter = useTransform(emphasisBlurVal, (v) => `blur(${v}px)`);
 
-  // Principles — staggered, typography + line
-  const principlesOpacity = useTransform(progress, [0.52, 0.72], [0, 1]);
-  const principlesY = useTransform(progress, [0.52, 0.72], [16, 0]);
-  const lineScale = useTransform(progress, [0.58, 0.82], [0, 1]);
-  const closingOpacity = useTransform(progress, [0.62, 0.8], [0, 1]);
+  // Principles — staggered, typography + line, after manifesto
+  const principlesOpacity = useTransform(progress, [0.70, 0.84], [0, 1]);
+  const principlesY = useTransform(progress, [0.70, 0.84], [16, 0]);
+  const lineScale = useTransform(progress, [0.74, 0.86], [0, 1]);
+  const closingOpacity = useTransform(progress, [0.78, 0.9], [0, 1]);
 
-  // Staggered principles individual
-  const p0Opacity = useTransform(progress, [0.52, 0.72], [0, 1]);
-  const p0Y = useTransform(progress, [0.52, 0.72], [10, 0]);
-  const p1Opacity = useTransform(progress, [0.6, 0.8], [0, 1]);
-  const p1Y = useTransform(progress, [0.6, 0.8], [10, 0]);
-  const p2Opacity = useTransform(progress, [0.68, 0.88], [0, 1]);
-  const p2Y = useTransform(progress, [0.68, 0.88], [10, 0]);
+  // Staggered principles individual — after manifesto, sequential
+  const p0Opacity = useTransform(progress, [0.70, 0.82], [0, 1]);
+  const p0Y = useTransform(progress, [0.70, 0.82], [10, 0]);
+  const p1Opacity = useTransform(progress, [0.74, 0.86], [0, 1]);
+  const p1Y = useTransform(progress, [0.74, 0.86], [10, 0]);
+  const p2Opacity = useTransform(progress, [0.78, 0.90], [0, 1]);
+  const p2Y = useTransform(progress, [0.78, 0.90], [10, 0]);
 
   if (reduced) {
     return (
@@ -56,7 +60,7 @@ export default function Hero() {
         className="relative overflow-hidden"
       >
         <div className="bg-tonal absolute inset-0" aria-hidden="true" />
-        <div className="grid-bg absolute inset-0 opacity-[0.28]" aria-hidden="true" />
+        <div className="grid-bg absolute inset-0 opacity-[0.34]" aria-hidden="true" />
         <div className="glow-behind absolute left-1/2 top-[18%] h-[62%] w-[78%] -translate-x-1/2" aria-hidden="true" />
         <div className="vignette absolute inset-0 opacity-60" aria-hidden="true" />
 
@@ -171,8 +175,8 @@ export default function Hero() {
                 </p>
 
                 <motion.p
-                  style={{ opacity: emphasisOpacity, y: emphasisY }}
-                  className="serif-em mt-3 max-w-[14ch] text-balance text-[clamp(2.55rem,6.8vw,5.35rem)] leading-[0.92] tracking-tight text-paper sm:max-w-none"
+                  style={{ opacity: emphasisOpacity, y: emphasisY, filter: emphasisFilter }}
+                  className="serif-em mt-3 max-w-[14ch] text-balance text-[clamp(2.55rem,6.8vw,5.35rem)] leading-[0.92] tracking-tight text-paper will-change-transform sm:max-w-none"
                 >
                   We make them matter.
                 </motion.p>
