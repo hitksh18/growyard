@@ -39,11 +39,11 @@ export default function AboutPreview() {
         <div className="grid grid-cols-1 gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-10 lg:items-start">
           {/* Editorial image composition — controlled, compact */}
           <div className="relative lg:col-span-5 lg:self-start">
-            <div className="relative pb-6 sm:pb-8 lg:pb-0">
-              <Parallax offset={24}>
-                <Reveal distance={24}>
+            <div className="relative">
+              <Parallax offset={16}>
+                <Reveal distance={20}>
                   <div className="relative border border-paper/10">
-                    <div className="relative aspect-[4/5] overflow-hidden">
+                    <div className="relative aspect-[4/5] overflow-hidden lg:aspect-auto lg:h-[460px] xl:h-[500px]">
                       <Image
                         src={tall.image}
                         alt={tall.alt}
